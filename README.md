@@ -1,21 +1,24 @@
 # CodeBridge
 
 #### Description
-A platform which provides online education service resource and code online judge services.
-Use:
-Java Spring Cloud myBatis
-mySql nacos 
-Vue
-ect.
+This project is platform which provides online education service resource and code online judge services. We are meant to provide a stable extendable and open source platform for education especially related to coding.
+
+
 
 #### Software Architecture
-Software architecture description
+Java 1.8	Spring 2.3.9.RELEASE 	Spring Cloud Alibaba 2.5.5.RELEASE
+
+myBatis	MySql 8	Nacos 2.1  
+
+Vue 2 & ElementUI
+
+ect.
 
 #### Installation
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  Make your you have installed JDK 1.8 or later
+2.  Deploy nacos
+3.  
 
 #### Instructions
 
@@ -33,9 +36,10 @@ Software architecture description
 
 #### Gitee Feature
 
-1.  You can use Readme\_XXX.md to support different languages, such as Readme\_en.md, Readme\_zh.md
+1.  You can use README.xx.md to support different languages, such as README.cn.md, README.jp.md
 2.  Gitee blog [blog.gitee.com](https://blog.gitee.com)
-3.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
-4.  The most valuable open source project [GVP](https://gitee.com/gvp)
-5.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
-6.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+3.  The website of this project is www.CodeBridge.cn 
+4.  Explore open source project [https://gitee.com/explore](https://gitee.com/explore)
+5.  The most valuable open source project [GVP](https://gitee.com/gvp)
+6.  The manual of Gitee [https://gitee.com/help](https://gitee.com/help)
+7.  The most popular members  [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
