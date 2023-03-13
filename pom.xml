@@ -15,6 +15,7 @@
         <module>task-service</module>
         <module>course-service</module>
         <module>relationship-service</module>
+        <module>gateway</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -52,6 +53,11 @@
                 <groupId>com.tencentcloudapi</groupId>
                 <artifactId>tencentcloud-sdk-java-sms</artifactId>
                 <version>3.1.637</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>2.3.0</version>
             </dependency>
         </dependencies>
 

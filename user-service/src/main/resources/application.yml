@@ -1,0 +1,79 @@
+
+spring:
+  application:
+    name: user-service
+    cloud:
+      nacos:
+        server-addr: localhost:8848
+        discovery:
+          cluster-name: Changsha #配置集群
+          namespace: 432f5be3-ff68-473f-86ef-e7d43c8e990f #命名空间
+  #        ephemeral: false #设置为永久实例
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://database.codebridge.cn:3306/user
+    username: root
+    password: Yy336699
+    type: com.alibaba.druid.pool.DruidDataSource
+    dbcp2:
+      pool-prepared-statements: true
+  servlet:
+    # 上传限定参数
+    multipart:
+      # 是否启用分段上传支持
+      enabled: true
+      # 最大请求大小
+      max-request-size: 60MB
+      # 最大文件的大小
+      max-file-size: 50MB
+      #上传文件的中间位置
+  #      location: /User/webbershaw/temp
+
+  mail:
+    host: smtp.exmail.qq.com
+    username: wenboxiao@stu.hunau.edu.cn
+    password: Xiaoge0225
+    default-encoding: utf-8
+mybatis:
+  type-aliases-package: edu.codebridge.user.mapper
+  mapper-locations: classpath*:mapper/*.xml
+  configuration:
+    cache-enabled: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+
+server:
+  port: 8084
+
+
+
+
+
+
+
+  # yml 配置如下
+#  ssl:
+#    key-store: classpath:www.webbershaw.fun.jks
+#    key-store-password: f6wg4y97b27
+#    key-store-type: JKS
+
+
+#azureblob:
+#  defaultEndpointsProtocol: https
+#  blobEndpoint: https://webbershaw.blob.core.windows.net/
+#  queueEndpoint: https://webbershaw.queue.core.windows.net/
+#  tableEndpoint: https://webbershaw.table.core.windows.net/
+#  accountName: webbershaw
+#  accountKey: +hCiGjG/ApY0j8mKrBmCKuyC5BIkoRPeEcv+EA0q+LIWo4oyay+H7JuI4SqpoCQq9G1hyQrGLb31+ASt4IGmDQ==
+#
+
+
+
+
+
+
+
+
+
+

@@ -6,13 +6,23 @@ This project is platform which provides online education service resource and co
 
 
 #### Software Architecture
-Java 1.8	Spring 2.3.9.RELEASE 	Spring Cloud Alibaba 2.5.5.RELEASE
+Java 1.8	Spring 2.3.9.RELEASE 	Spring Cloud Alibaba 2.5.5.RELEASE	Spring Cloud Gateway
 
 myBatis	MySql 8	Nacos 2.1  
 
 Vue 2 & ElementUI
 
 ect.
+
+#### Requisite Environment
+
+- ##### Development
+
+  1. JDK 1.8 or later
+  2. Nacos with standalone deployment port 8848
+  3.  
+
+- ##### Production
 
 #### Installation
 
