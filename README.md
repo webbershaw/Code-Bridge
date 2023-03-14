@@ -3,7 +3,7 @@
 #### Description
 This project is platform which provides online education service resource and code online judge services. We are meant to provide a stable extendable and open source platform for education especially related to coding.
 
-
+This project is owned by FuturePioneers Team CSECL lab,Hunan Agricultural University. 
 
 #### Software Architecture
 Java 1.8	Spring 2.3.9.RELEASE 	Spring Cloud Alibaba 2.5.5.RELEASE	Spring Cloud Gateway

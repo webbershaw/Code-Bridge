@@ -15,22 +15,22 @@ spring:
         - id: user-service
           uri: lb://user-service
           predicates:
-            - Path=/user/**
+            - Path=/users/**
 
         - id: task-service
           uri: lb://task-service
           predicates:
-            - Path=/task/**
+            - Path=/tasks/**
 
         - id: course-service
           uri: lb://course-service
           predicates:
-            - Path=/course/**
+            - Path=/courses/**
 
         - id: relationship-service
           uri: lb://relationship-service
           predicates:
-            - Path=/relationship/**
+            - Path=/relationships/**
       globalcors:
         add-to-simple-url-handler-mapping: true
         cors-configurations:

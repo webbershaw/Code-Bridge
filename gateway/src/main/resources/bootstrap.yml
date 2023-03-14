@@ -1,6 +1,6 @@
 spring:
   application:
-    name: task-service
+    name: gateway
   profiles:
     active: dev
   cloud:

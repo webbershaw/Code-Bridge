@@ -7,7 +7,7 @@ spring:
         server-addr: localhost:8848
         discovery:
           cluster-name: Changsha #配置集群
-          namespace: 432f5be3-ff68-473f-86ef-e7d43c8e990f #命名空间
+#          namespace: 432f5be3-ff68-473f-86ef-e7d43c8e990f #命名空间
   #        ephemeral: false #设置为永久实例
 
   datasource:
