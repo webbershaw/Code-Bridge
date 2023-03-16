@@ -28,13 +28,15 @@
 
 - #### Error Const Code
 
-  On occuring an error on backend server,   
+  On occuring an error on backend server, We use Result class to express   
 
 
 
 
 
 ### Security Specification
+
+
 
 
 
