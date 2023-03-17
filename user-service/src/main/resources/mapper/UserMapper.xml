@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.codebridge.user.mapper.UserMapper">
+    <update id="updateUsersByCondition">
+        update cb_user.user
+        <set>
+            <if test="id !=null and id !=0 ">
+                username = #{username},
+            </if>
+            <if test="username !=null and username !='' ">
+                username = #{username},
+            </if>
+            <if test="pwd !=null and pwd !='' ">
+                pwd = #{pwd},
+            </if>
+            <if test="email !=null and email !='' ">
+                email = #{email},
+            </if>
+            <if test="avatarUrl !=null and avatarUrl !='' ">
+                avatar_url = #{avatarUrl},
+            </if>
+            <if test="identity !=null and identity !='' ">
+                identity = #{identity},
+            </if>
+            <if test="createTime !=null and createTime !='' ">
+                create_time = #{avatarUrl},
+            </if>
+            <if test="updateTime !=null and updateTime !='' ">
+                update_time = #{updateTime},
+            </if>
+            <if test="intro !=null and intro !='' ">
+                intro = #{intro},
+            </if>
+            <if test="certified !=null and certified !='' ">
+                certified = #{certified},
+            </if>
+            <if test="schoolId !=null and schoolId !='' ">
+                school_id = #{schoolId},
+            </if>
+            <if test="personId !=null and personId !='' ">
+                person_id = #{personId},
+            </if>
+            <if test="name !=null and name !='' ">
+                name = #{name},
+            </if>
+        </set>
+        where deleted = 0;
+    </update>
+
+    <select id="queryByCondition" resultType="edu.codebridge.feign.entity.User">
+        select * from cb_user.user
+            where deleted = 0
+
+            <if test="username !=null and username !='' ">
+                and username = #{username}
+            </if>
+            <if test="pwd !=null and pwd !='' ">
+                and pwd = #{pwd}
+            </if>
+            <if test="email !=null and email !='' ">
+                and email = #{email}
+            </if>
+            <if test="avatarUrl !=null and avatarUrl !='' ">
+                and avatar_url = #{avatarUrl}
+            </if>
+            <if test="identity !=null and identity !='' ">
+                and identity = #{identity}
+            </if>
+            <if test="createTime !=null and createTime !='' ">
+                and create_time = #{avatarUrl}
+            </if>
+            <if test="updateTime !=null and updateTime !='' ">
+                and update_time = #{updateTime}
+            </if>
+            <if test="intro !=null and intro !='' ">
+                and intro = #{intro}
+            </if>
+            <if test="certified !=null and certified !='' ">
+                and certified = #{certified}
+            </if>
+            <if test="schoolId !=null and schoolId !='' ">
+                and school_id = #{schoolId}
+            </if>
+            <if test="personId !=null and personId !='' ">
+                and person_id = #{personId}
+            </if>
+            <if test="name !=null and name !='' ">
+                and name = #{name}
+            </if>
+
+
+    </select>
+    <select id="queryUsersByCondition" resultType="edu.codebridge.feign.entity.User">
+        select * from cb_user.user
+        where deleted = 0
+
+        <if test="username !=null and username !='' ">
+            and username = #{username}
+        </if>
+        <if test="pwd !=null and pwd !='' ">
+            and pwd = #{pwd}
+        </if>
+        <if test="email !=null and email !='' ">
+            and email = #{email}
+        </if>
+        <if test="avatarUrl !=null and avatarUrl !='' ">
+            and avatar_url = #{avatarUrl}
+        </if>
+        <if test="identity !=null and identity !='' ">
+            and identity = #{identity}
+        </if>
+        <if test="createTime !=null and createTime !='' ">
+            and create_time = #{avatarUrl}
+        </if>
+        <if test="updateTime !=null and updateTime !='' ">
+            and update_time = #{updateTime}
+        </if>
+        <if test="intro !=null and intro !='' ">
+            and intro = #{intro}
+        </if>
+        <if test="certified !=null and certified !='' ">
+            and certified = #{certified}
+        </if>
+        <if test="schoolId !=null and schoolId !='' ">
+            and school_id = #{schoolId}
+        </if>
+        <if test="personId !=null and personId !='' ">
+            and person_id = #{personId}
+        </if>
+        <if test="name !=null and name !='' ">
+            and name = #{name}
+        </if>
+    </select>
+</mapper>

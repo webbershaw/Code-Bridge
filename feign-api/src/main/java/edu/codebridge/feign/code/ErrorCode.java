@@ -10,6 +10,7 @@ public class ErrorCode {
     public static final Integer ERR = 2000;
 
     public static final Integer NOT_LOGIN = 2002;
+    public static final Integer PERMISSION_DENIED = 2003;
 
 
 }
