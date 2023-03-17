@@ -8,7 +8,10 @@ import java.util.Date;
 public class Class {
     private int classId;
     private int courseId;
-    private Long UserId;
+
+    private Course course;
+    private Long userId;
+    private User user;
     private String className;
     private short  deleted;
 
