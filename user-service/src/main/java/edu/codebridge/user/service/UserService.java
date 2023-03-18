@@ -26,6 +26,10 @@ public interface UserService {
 
 
 
+    public User queryUserById(Integer id);
+
+
+
     /*-----------------Division of ↓↓↓↓ public API ↓↓↓↓ and ↑↑↑↑ private API ↑↑↑↑------------------------*/
     public Result register(User user);
 
@@ -33,6 +37,8 @@ public interface UserService {
     public Result loginByVerifyCode(User user);
 
     public Result attachToSchool(User user);
+
+
 
 
 }

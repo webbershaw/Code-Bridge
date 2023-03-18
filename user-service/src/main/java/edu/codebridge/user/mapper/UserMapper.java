@@ -3,6 +3,7 @@ package edu.codebridge.user.mapper;
 
 import edu.codebridge.feign.entity.School;
 import edu.codebridge.feign.entity.User;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -24,11 +25,16 @@ public interface UserMapper {
 
     public List<User> queryUsersByCondition(User user);
 
-    public User updateByCondition(User user);
+    public Integer updateByCondition(User user);
 
-    public Integer updateUsersByCondition(User user);
-
+    @Insert("insert into school (image_path, school_name, school_intro) values" +
+            "(#{imagePath},#{schoolName},#{schoolIntro}) ")
     public School insertSchool(School school);
+
+    @Insert("insert into user (username,pwd,tel) values (#{username},#{pwd},#{tel})")
+    public User insertUser(User user);
+
+
 
 
 

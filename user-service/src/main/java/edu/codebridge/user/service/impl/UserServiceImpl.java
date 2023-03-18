@@ -31,6 +31,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User queryUserById(Integer id) {
+        return userMapper.queryById(id);
+    }
+
+    @Override
     public Result register(User user) {
         /*用户信息的判断逻辑*/
         //用于判断电话号码是否符合中国大陆规则的正则
