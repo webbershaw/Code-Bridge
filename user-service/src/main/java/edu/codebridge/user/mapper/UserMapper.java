@@ -20,6 +20,7 @@ public interface UserMapper {
     @Select("select * from cb_user.user where tel = #{tel} and deleted = 0")
     public User queryByTel(String tel);
 
+
     public User queryByCondition(User user);
 
     public List<User> queryUsersByCondition(User user);
