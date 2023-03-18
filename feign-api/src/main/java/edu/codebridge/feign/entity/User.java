@@ -12,14 +12,14 @@ public class User {
     private String username;
     private String  pwd;
     private String email;
-    private short deleted;
+    private Short deleted;
     private String avatarUrl;
-    private short identity;
+    private Short identity;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
     private String  intro;
-    private short certified;
-    private int schoolId;
+    private Short certified;
+    private Integer schoolId;
     private String personId;
     private String name;
     private String tel;

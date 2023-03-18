@@ -33,7 +33,7 @@ public interface UserService {
     /*-----------------Division of ↓↓↓↓ public API ↓↓↓↓ and ↑↑↑↑ private API ↑↑↑↑------------------------*/
     public Result register(User user);
 
-    public Result loginByPwd(User user);
+    public User loginByPwd(User user);
     public Result loginByVerifyCode(User user);
 
     public Result attachToSchool(User user);

@@ -2,6 +2,7 @@ package edu.codebridge.user;
 
 import edu.codebridge.feign.entity.User;
 import edu.codebridge.user.mapper.UserMapper;
+import edu.codebridge.user.util.PwdEncodingUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,7 +30,13 @@ public class UserMapperTest {
         user.setEmail("b@b.com");
         user.setTel("120");
         user.setName("dashabi");
-        Integer integer = userMapper.updateUsersByCondition(user);
+        Integer integer = userMapper.updateByCondition(user);
         System.out.println(integer);
+    }
+
+    @Test
+    public void pwdtest(){
+        String s = PwdEncodingUtil.encodePwd("123");
+        System.out.println(s);
     }
 }

@@ -59,8 +59,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result loginByPwd(User user) {
-        return null;
+    public User loginByPwd(User user) {
+        User userRes = userMapper.queryByCondition(user);
+        return userRes;
     }
 
     @Override
