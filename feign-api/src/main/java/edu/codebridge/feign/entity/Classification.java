@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class Classification {
 
-private int classificationId;
-private String classificationName;
+    private Integer classificationId;
+    private String classificationName;
 
 }

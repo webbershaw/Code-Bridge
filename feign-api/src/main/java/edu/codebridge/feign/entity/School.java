@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class School {
-    private int schoolId;
+    private Integer schoolId;
     private String imagePath;
     private String schoolName;
     private String schoolIntro;

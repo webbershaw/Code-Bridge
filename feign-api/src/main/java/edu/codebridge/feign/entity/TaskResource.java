@@ -2,9 +2,12 @@ package edu.codebridge.feign.entity;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class TaskResource {
-    private int taskId;
-    private int  resourceId;
-    private  double   score;
+    private Integer taskId;
+    private Integer resourceId;
+    private List<Resource> resources;
+    private Double score;
 }

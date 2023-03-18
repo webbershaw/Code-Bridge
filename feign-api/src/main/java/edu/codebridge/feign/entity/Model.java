@@ -9,12 +9,12 @@ import java.util.Date;
 public class Model {
 
 
-    private int modelId;
+    private Integer modelId;
     private String modelName;
-    private short isPublic;
+    private Short isPublic;
     private LocalDateTime createdTime;
-    private short deleted;
-    private int  classificationId;
+    private Short deleted;
+    private Integer  classificationId;
 
 
 

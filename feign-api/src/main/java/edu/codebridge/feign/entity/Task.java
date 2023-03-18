@@ -4,10 +4,13 @@ import lombok.Data;
 
 @Data
 public class Task {
-    private  int taskId;
-    private int courseId;
+    private Integer taskId;
+    private Integer courseId;
+
+    private Course course;
+
     private String  taskName;
-    private short taskType;
-    private short deleted;
+    private Short taskType;
+    private Short deleted;
 
 }
