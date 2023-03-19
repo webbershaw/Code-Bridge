@@ -61,7 +61,7 @@ public interface RelationshipMapper {
      * @return List<StudentTask>
      */
     @Select("select * from cb_relationship.student-task where user_id = #{userId}")
-    public List<StudentTask> queryStudentTaskBy(Long userId);
+    public List<StudentTask> queryStudentTaskByUserId(Long userId);
 
     /**
      * 根据taskid查询
@@ -69,7 +69,7 @@ public interface RelationshipMapper {
      * @return List<StudentTask>
      */
     @Select("select * from cb_relationship.student-task where task_id = #{taskId}")
-    public List<StudentTask> queryStudentTaskBy(Integer taskId);
+    public List<StudentTask> queryStudentTaskByTaskId(Integer taskId);
 
 
 
