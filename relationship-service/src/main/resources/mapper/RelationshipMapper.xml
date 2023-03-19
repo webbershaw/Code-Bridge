@@ -2,4 +2,132 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="edu.codebridge.relationship.mapper.RelationshipMapper"></mapper>
+<mapper namespace="edu.codebridge.relationship.mapper.RelationshipMapper">
+    <select id="queryClassTasksByCondition" resultType="edu.codebridge.feign.entity.ClassTask">
+        SELECT * FROM cb_relationship.`class-task`
+        WHERE deleted = 0
+        <if test="classId != null and classId != '0' and classId != '' " >
+            and class_id = #{classId}
+        </if>
+        <if test="taskId != null and taskId != '0' and taskId != '' ">
+            and task_id = #{taskId}
+        </if>
+        <if test="startTime != null and startTime !='' ">
+            and start_time = #{startTime}
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and end_time = #{endTime}
+        </if>
+        <if test="invisible != null and invisible != '' ">
+            and invisible = #{invisible}
+        </if>
+        <if test="accessible != null and accessible != '' ">
+            and accessible = #{accessible}
+        </if>
+        <if test="weight != null and weight != '' ">
+            and weight = #{weight}
+        </if>
+        <if test="resubmit != null and resubmit != '' ">
+            and resubmit = #{resubmit}
+        </if>
+        <if test="checkAfterSubmit != null and checkAfterSubmit != ''  ">
+            and check_after_submit = #{checkAfterSubmit}
+        </if>
+        <if test="correctionMode != null and correctionMode != '' ">
+            and correction_mode = #{correctionMode}
+        </if>
+    </select>
+
+
+
+    <select id="queryClassTaskByCondition" resultType="edu.codebridge.feign.entity.ClassTask">
+        SELECT * FROM cb_relationship.`class-task`
+        WHERE deleted = 0
+        <if test="classId != null and classId != '0' and classId != '' " >
+            and class_id = #{classId}
+        </if>
+        <if test="taskId != null and taskId != '0' and taskId != ''  ">
+            and task_id = #{taskId}
+        </if>
+        <if test="startTime != null and startTime !='' ">
+            and start_time = #{startTime}
+        </if>
+        <if test="endTime != null and endTime != '' ">
+            and end_time = #{endTime}
+        </if>
+        <if test="invisible != null and invisible != '' ">
+            and invisible = #{invisible}
+        </if>
+        <if test="accessible != null and accessible != '' ">
+            and accessible = #{accessible}
+        </if>
+        <if test="weight != null and weight != '' ">
+            and weight = #{weight}
+        </if>
+        <if test="resubmit != null and resubmit != '' ">
+            and resubmit = #{resubmit}
+        </if>
+        <if test="checkAfterSubmit != null and checkAfterSubmit != ''  ">
+            and check_after_submit = #{checkAfterSubmit}
+        </if>
+        <if test="correctionMode != null and correctionMode != '' ">
+            and correction_mode = #{correctionMode}
+        </if>
+    </select>
+
+
+
+    <update id="updateClassTask">
+        update cb_relationship.`class-task`
+        <set>
+            <if test="classId != null and classId != '0' and classId != '' " >
+                class_id = #{classId},
+            </if>
+            <if test="taskId != null and taskId != '0' and taskId != '' ">
+                task_id = #{taskId},
+            </if>
+            <if test="startTime != null and startTime !='' ">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null and endTime != '' ">
+                end_time = #{endTime},
+            </if>
+            <if test="invisible != null and invisible != '' ">
+                invisible = #{invisible},
+            </if>
+            <if test="accessible != null and accessible != '' ">
+                accessible = #{accessible},
+            </if>
+            <if test="weight != null and weight != '' ">
+                weight = #{weight},
+            </if>
+            <if test="resubmit != null and resubmit != '' ">
+                resubmit = #{resubmit},
+            </if>
+            <if test="checkAfterSubmit != null and checkAfterSubmit != ''  ">
+                check_after_submit = #{checkAfterSubmit},
+            </if>
+            <if test="correctionMode != null and correctionMode != '' ">
+                correction_mode = #{correctionMode},
+            </if>
+        </set>
+        WHERE deleted = 0;
+    </update>
+
+
+
+
+    <update id="updateStudentClass">
+        update cb_relationship.`student-class`
+        <set>
+            <if test="userId != null and userId != '' and userId != '0' ">
+                use_id = #{userId},
+            </if>
+            <if test="classId != null and classId != '' and classId != '0' ">
+                class_id = #{classId}
+            </if>
+        </set>
+    </update>
+
+
+</mapper>

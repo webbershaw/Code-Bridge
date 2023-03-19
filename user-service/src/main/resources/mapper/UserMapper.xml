@@ -113,7 +113,7 @@
             and identity = #{identity}
         </if>
         <if test="createTime !=null and createTime !='' ">
-            and create_time = #{avatarUrl}
+            and create_time = #{createTime}
         </if>
         <if test="updateTime !=null and updateTime !='' ">
             and update_time = #{updateTime}
