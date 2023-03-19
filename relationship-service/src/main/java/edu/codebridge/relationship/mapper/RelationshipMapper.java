@@ -218,6 +218,16 @@ public interface RelationshipMapper {
     @Select("select * from cb_relationship.`student-class` where user_id = #{userId}")
     public List<StudentClass> queryStudentClassByUserId(Long userId);
 
+
+    /**
+     * 根据userid查询classid
+     * @param userId
+     * @return List<Integer>
+     */
+    @Select("select class_id from cb_relationship.`student-class` where user_id = #{userId}")
+    public List<Integer> queryClassIdByUserId(Long userId);
+
+
     /**
      * 根据classid查询
      * @param classId
@@ -227,9 +237,19 @@ public interface RelationshipMapper {
     public List<StudentClass> queryStudentClassByClassId(Integer classId);
 
     /**
+     * 根据classid查询userid
+     * @param classId
+     * @return List<Long>
+     */
+    @Select("select user_id from cb_relationship.`student-class` where class_id = #{classId}")
+    public List<Long> queryUserIdByClassId(Integer classId);
+
+
+    /**
      * 根据条件查询StudentClass
      * @return List<StudentClass>
      */
+    @Deprecated
     public List<StudentClass> queryStudentClassesByCondition(StudentClass studentClass);
 
 

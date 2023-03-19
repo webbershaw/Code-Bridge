@@ -2,6 +2,7 @@ package edu.codebridge.relationship;
 
 
 import edu.codebridge.feign.entity.ClassTask;
+import edu.codebridge.feign.entity.StudentClass;
 import edu.codebridge.relationship.mapper.RelationshipMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,12 @@ public class ClassTaskMapperTest {
         for (ClassTask classTask1:classTasks){
             System.out.println(classTask1);
         }
+    }
+
+    @Test
+    public void queryUserIdByClassIdTest(){
+        List<Long> longs = relationshipMapper.queryUserIdByClassId(1);
+        System.out.println(longs);
     }
 
 }
