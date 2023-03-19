@@ -19,7 +19,7 @@ public interface RelationshipMapper {
      * @param taskId
      * @return List<StudentTaskResource>
      */
-    @Select("select * from cb_relationship.student-task-resource where user_id = #{userId} and task_id = #{taskId}")
+    @Select("select * from `student-task-resource` where user_id = #{userId} and task_id = #{taskId}")
     public List<StudentTaskResource> queryStudentTaskResourceByUserIdAndTaskId(Long userId, Integer taskId);
 
     /**
@@ -28,7 +28,9 @@ public interface RelationshipMapper {
      * @param resourceId
      * @return List<StudentTaskResource>
      */
-    @Select("select * from cb_relationship.student-task-resource where task_id = #{taskId} and resource_id = #{resourceId}")
+
+//    @Select("select * from `student-task-resource` where task_id = #{taskId} and resource_id = #{resourceId}")
+    @Select("select * from `student-task-resource` where task_id =#{taskId} and resource_id = #{resourceId}")
     public List<StudentTaskResource> queryStudentTaskResourceByTaskIdAndResourceId(Integer taskId, Integer resourceId);
 
 
@@ -38,7 +40,7 @@ public interface RelationshipMapper {
      * @param resourceId
      * @return List<StudentTaskResource>
      */
-    @Select("select * from cb_relationship.student-task-resource where user_id = #{userId} and resource_id = #{resourceId}")
+    @Select("select * from `student-task-resource` where user_id = #{userId} and resource_id = #{resourceId}")
     public List<StudentTaskResource> queryStudentTaskResourceByUserIdAndResourceId(Long userId, Integer resourceId);
 
     /**
@@ -46,8 +48,8 @@ public interface RelationshipMapper {
      * @param studentTaskResource
      */
 
-    @Insert("insert into cb_relationship.student-task-resource (user_id, task_id, resource_id, status, score)" +
-            " values (#{userIde},#{taskId},#{resourceId}),#{status},#{score}")
+    @Insert("insert into `student-task-resource` (user_id, task_id, resource_id, status, score)" +
+            " values (#{userIde},#{taskId},#{resourceId},#{status},#{score})")
     public StudentTaskResource insertStudentTaskResource(StudentTaskResource studentTaskResource);
 
 
@@ -60,16 +62,16 @@ public interface RelationshipMapper {
      * @param userId
      * @return List<StudentTask>
      */
-    @Select("select * from cb_relationship.student-task where user_id = #{userId}")
-    public List<StudentTask> queryStudentTaskBy(Long userId);
+    @Select("select * from `student-task` where user_id = #{userId}")
+    public List<StudentTask> queryStudentTaskByUserId(Long userId);
 
     /**
      * 根据taskid查询
      * @param taskId
      * @return List<StudentTask>
      */
-    @Select("select * from cb_relationship.student-task where task_id = #{taskId}")
-    public List<StudentTask> queryStudentTaskBy(Integer taskId);
+    @Select("select * from `student-task` where task_id = #{taskId}")
+    public List<StudentTask> queryStudentTaskByTaskId(Integer taskId);
 
 
 
