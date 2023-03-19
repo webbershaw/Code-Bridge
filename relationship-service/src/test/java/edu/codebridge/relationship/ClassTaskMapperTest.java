@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @SpringBootTest
 public class ClassTaskMapperTest {
@@ -16,7 +17,7 @@ public class ClassTaskMapperTest {
     @Test
     public void insertClassTaskTest(){
         ClassTask classTask = new ClassTask();
-        classTask.setClassId(66);
+        classTask.setClassId(1);
         classTask.setTaskId(9);
         classTask.setStartTime(LocalDateTime.now());
         LocalDateTime endTime = LocalDateTime.of(2025,10,1,23,59);
@@ -34,8 +35,12 @@ public class ClassTaskMapperTest {
     @Test
     public void queryByConditionTest(){
         ClassTask classTask = new ClassTask();
-        classTask.getClassId();
+        classTask.setClassId(66);
+        List<ClassTask> classTasks = relationshipMapper.queryClassTasksByCondition(classTask);
+        System.out.println(classTasks);
+        for (ClassTask classTask1:classTasks){
+            System.out.println(classTask1);
+        }
     }
-
 
 }

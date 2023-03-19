@@ -3,6 +3,8 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.codebridge.relationship.mapper.RelationshipMapper">
+
+    <!--".......................................................ClassTask..................................................."-->
     <select id="queryClassTasksByCondition" resultType="edu.codebridge.feign.entity.ClassTask">
         SELECT * FROM cb_relationship.`class-task`
         WHERE deleted = 0
@@ -19,10 +21,10 @@
             and end_time = #{endTime}
         </if>
         <if test="invisible != null and invisible != '' ">
-            and invisible = #{invisible}
+            and `invisible` = #{invisible}
         </if>
         <if test="accessible != null and accessible != '' ">
-            and accessible = #{accessible}
+            and `accessible` = #{accessible}
         </if>
         <if test="weight != null and weight != '' ">
             and weight = #{weight}
@@ -37,7 +39,6 @@
             and correction_mode = #{correctionMode}
         </if>
     </select>
-
 
 
     <select id="queryClassTaskByCondition" resultType="edu.codebridge.feign.entity.ClassTask">
@@ -56,10 +57,10 @@
             and end_time = #{endTime}
         </if>
         <if test="invisible != null and invisible != '' ">
-            and invisible = #{invisible}
+            and `invisible` = #{invisible}
         </if>
         <if test="accessible != null and accessible != '' ">
-            and accessible = #{accessible}
+            and `accessible` = #{accessible}
         </if>
         <if test="weight != null and weight != '' ">
             and weight = #{weight}
@@ -74,8 +75,6 @@
             and correction_mode = #{correctionMode}
         </if>
     </select>
-
-
 
     <update id="updateClassTask">
         update cb_relationship.`class-task`
@@ -93,10 +92,10 @@
                 end_time = #{endTime},
             </if>
             <if test="invisible != null and invisible != '' ">
-                invisible = #{invisible},
+                `invisible` = #{invisible},
             </if>
             <if test="accessible != null and accessible != '' ">
-                accessible = #{accessible},
+                `accessible` = #{accessible},
             </if>
             <if test="weight != null and weight != '' ">
                 weight = #{weight},
@@ -116,7 +115,7 @@
 
 
 
-
+    <!--.......................................................StudentClass...............................................-->
     <update id="updateStudentClass">
         update cb_relationship.`student-class`
         <set>
@@ -129,5 +128,106 @@
         </set>
     </update>
 
+
+    <select id="queryStudentClassesByCondition" resultType="edu.codebridge.feign.entity.StudentClass">
+        SELECT * FROM cb_relationship.`student-class`
+        WHERE
+        <if test="userId != null and userId != '' and userId != '0' ">
+            user_id = #{userId}
+        </if>
+        <if test="classId != null and classId != '' and classId != '0' ">
+            and class_id = #{classId}
+        </if>
+    </select>
+    
+    
+    
+    <!--....................................................................StudentTaskResource..................................................-->
+    <update id="updateStudentTaskResource">
+        update cb_relationship.`student-task-resource`
+        <set>
+            <if test="userId != null and userId !='' and userId != '0' ">
+                user_id = #{userId},
+            </if>
+            <if test="taskId != null and taskId != '' and taskId != '0' ">
+                task_id = #{taskId},
+            </if>
+            <if test="resourceId != null and resourceId != '' and resourceId != '0' ">
+                resource_id = #{resourceId},
+            </if>
+            <if test="status != null and status != '' ">
+                `status` = #{status},
+            </if>
+            <if test="score != null and score !='' ">
+                score = #{score}
+            </if>
+        </set>
+    </update>
+
+    <select id="queryStudentTasksResourceByCondition" resultType="edu.codebridge.feign.entity.StudentTaskResource">
+        SELECT * FROM cb_relationship.`student-task-resource`
+        WHERE
+        <if test="userId != null and userId !='' and userId != '0' ">
+            user_id = #{userId}
+        </if>
+        <if test="taskId != null and taskId != '' and taskId != '0' ">
+            and task_id = #{taskId}
+        </if>
+        <if test="resourceId != null and resourceId != '' and resourceId != '0' ">
+            and resource_id = #{resourceId}
+        </if>
+        <if test="status != null and status != '' ">
+            and `status` = #{status}
+        </if>
+        <if test="score != null and score !='' ">
+            and score = #{score}
+        </if>
+    </select>
+
+
+
+    <!--......................................................StudentTask..................................................-->
+    <select id="queryStudentTasksByCondition" resultType="edu.codebridge.feign.entity.StudentTask">
+        SELECT * FROM cb_relationship.`student-task`
+        WHERE
+        <if test="userId != null and userId != '' and userId != '0' ">
+            user_id = #{userId}
+        </if>
+        <if test="taskId != null and taskId != '' and taskId != '0' ">
+            and task_id = #{taskId}
+        </if>
+        <if test="status != null and status != '' ">
+            and `status` = #{status}
+        </if>
+        <if test="score != null and score != '' ">
+            and score = #{score}
+        </if>
+        <if test="accessible != null and accessible != '' ">
+            and `accessible` = #{accessible}
+        </if>
+    </select>
+
+
+
+    <update id="updateStudentTasks">
+        UPDATE cb_relationship.`student-task`
+        <set>
+            <if test="userId != null and userId != '' and userId != '0' ">
+                user_id = #{userId},
+            </if>
+            <if test="taskId != null and taskId != '' and taskId != '0' ">
+                task_id = #{taskId},
+            </if>
+            <if test="status != null and status != '' ">
+                `status` = #{status},
+            </if>
+            <if test="score != null and score != '' ">
+                score = #{score},
+            </if>
+            <if test="accessible != null and accessible != '' ">
+                `accessible` = #{accessible}
+            </if>
+        </set>
+    </update>
 
 </mapper>

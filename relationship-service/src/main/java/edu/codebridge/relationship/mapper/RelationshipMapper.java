@@ -77,15 +77,47 @@ public interface RelationshipMapper {
      * @param studentTaskResource
      */
 
-    @Insert("insert into `student-task-resource` (user_id, task_id, resource_id, status, score)" +
+    @Insert("insert into `student-task-resource` (user_id, task_id, resource_id, `status`, score)" +
             " values (#{userIde},#{taskId},#{resourceId},#{status},#{score})")
     public Boolean insertStudentTaskResource(StudentTaskResource studentTaskResource);
+
+    /**
+     * 更新StudentTaskResource数据表
+     * @param studentClass
+     * @return Boolean
+     */
+    public Boolean updateStudentTaskResource(StudentClass studentClass);
+
+    /**
+     * 根据条件查询StudentTasksResource数据表
+     * @param studentTaskResource
+     * @return List<StudentTaskResource>
+     */
+    public List<StudentTaskResource> queryStudentTasksResourceByCondition(StudentTaskResource studentTaskResource);
+
+
 
 
 
 
 
     /*---------------------------------StudentTask-----------------------------------*/
+
+    /**
+     * 根据条件查询StudentTask
+     * @param studentTask
+     * @return List<StudentTask>
+     */
+    public List<StudentTask> queryStudentTasksByCondition(StudentTask studentTask);
+
+    /**
+     * 跟新数据表StudentTasks
+     * @param studentTask
+     * @return Boolean
+     */
+    public Boolean updateStudentTasks(StudentTask studentTask);
+
+
     /**
      * 根据userid查询
      * @param userId
@@ -128,7 +160,7 @@ public interface RelationshipMapper {
      * @return Boolean
      */
     @Insert("insert into cb_relationship.`student-task`" +
-            "(user_id, task_id, status, score, `accessible`)" +
+            "(user_id, task_id, `status`, score, `accessible`)" +
             "values " +
             "(#{userId}, #{taskId}, #{status}, #{score}, #{ccessible})")
     public Boolean insertStudentTask(StudentTask studentTask);
@@ -161,7 +193,7 @@ public interface RelationshipMapper {
      * @return Boolean
      */
     @Insert("insert into cb_relationship.`class-task`" +
-            "(class_id, task_id, start_time, end_time, invisible, `accessible`, weight, resubmit, check_after_submit, correction_mode) " +
+            "(class_id, task_id, start_time, end_time, `invisible`, `accessible`, weight, resubmit, check_after_submit, correction_mode) " +
             "values " +
             "(#{classId}, #{taskId}, #{startTime}, #{endTime}, #{invisible}, #{accessible}, #{weight}, #{resubmit}, #{checkAfterSubmit}, #{correctionMode})")
     public Boolean insertClassTask(ClassTask classTask);
@@ -194,6 +226,18 @@ public interface RelationshipMapper {
     @Select("select * from cb_relationship.`student-class` where class_id = #{classId}")
     public List<StudentClass> queryStudentClassByClassId(Integer classId);
 
+    /**
+     * 根据条件查询StudentClass
+     * @return List<StudentClass>
+     */
+    public List<StudentClass> queryStudentClassesByCondition(StudentClass studentClass);
+
+
+    /**
+     * 插入数据表StudentClass
+     * @param studentClass
+     * @return Boolean
+     */
     @Insert("insert into cb_relationship.`student-class` " +
             "(user_id, class_id)" +
             "values " +
@@ -201,7 +245,11 @@ public interface RelationshipMapper {
             )
     public Boolean insertStudentClass(StudentClass studentClass);
 
-
+    /**
+     * 更新数据表StudentClass
+     * @param studentClass
+     * @return Boolean
+     */
     public Boolean updateStudentClass(StudentClass studentClass);
 
 }
