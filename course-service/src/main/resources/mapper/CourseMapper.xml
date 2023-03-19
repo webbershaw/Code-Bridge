@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.codebridge.course.mapper.CourseMapper">
+
+
+    <insert id="addCourse">
+        INSERT INTO course(
+    course_id,
+    course_name,
+    course_intro,
+    start_time,
+    end_time,
+    user_id,
+    model_id
+    )
+    VALUES
+    (
+    #{courseId},
+    #{courseName},
+    #{courseIntro},
+    #{startTime},
+    #{endTime},
+    #{userId},
+    #{modelId}
+    );
+    </insert>
+
+    <update id="updateCourseById">
+
+        update course
+        <set>
+<!--            <if test="course_id !=null and course_id !=0 ">-->
+<!--                username = #{username},-->
+<!--            </if>-->
+            <if test="courseName !=null and courseName !='' ">
+                course_name = #{courseName},
+            </if>
+            <if test="courseIntro !=null and courseIntro !='' ">
+                course_intro = #{courseIntro},
+            </if>
+            <if test="startTime !=null and startTime !='' ">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime !=null and endTime !='' ">
+                end_time = #{endTime},
+            </if>
+            <if test="userId !=null and userId !='' ">
+                user_id = #{userId},
+            </if>
+            <if test="modelId !=null and modelId !='' ">
+                model_id = #{modelId},
+            </if>
+            <if test="deleted !=null and deleted !='' ">
+                deleted = #{deleted},
+            </if>
+        </set>
+            where course_id = #{courseId};
+    </update>
+</mapper>
