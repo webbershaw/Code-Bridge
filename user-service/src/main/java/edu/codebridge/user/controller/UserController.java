@@ -21,6 +21,7 @@ public class UserController {
     UserService userService;
 
 
+
     @GetMapping("/pr/{id}")
     public User queryById(@PathVariable Integer id){
         User user = userService.queryUserById(id);
@@ -32,10 +33,10 @@ public class UserController {
     /*-----------------Division of ↓↓↓↓ public API ↓↓↓↓ and ↑↑↑↑ private API ↑↑↑↑------------------------*/
 
     @PostMapping("/")
-    public Result register(HttpServletRequest httpServletRequest, User user){
-        userService.register(user);
+    public Result register(HttpServletRequest httpServletRequest, @PathVariable User user){
 
-        return null;
+
+        return userService.register(user,httpServletRequest);
     }
 
     @PostMapping("/login")
@@ -57,6 +58,17 @@ public class UserController {
         System.out.println(user1);
         return new Result(ErrorCode.OK, user1, "登陆成功");
 
+    }
+
+    @GetMapping("/verifyCode/{type}/{tel}")
+    public Result sendVerifyCode(@PathVariable Integer type,@PathVariable String tel,HttpServletRequest request){
+        Result result = null;
+        try {
+            result = userService.sendVerifyCode(request, tel, type);
+        } catch (Exception e) {
+            return new Result(ErrorCode.ERR,null,"发送失败，请联系管理员");
+        }
+        return result;
     }
 
 

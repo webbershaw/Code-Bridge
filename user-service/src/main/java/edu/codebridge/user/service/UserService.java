@@ -3,6 +3,7 @@ package edu.codebridge.user.service;
 import edu.codebridge.feign.entity.Result;
 import edu.codebridge.feign.entity.User;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface UserService {
@@ -31,12 +32,14 @@ public interface UserService {
 
 
     /*-----------------Division of ↓↓↓↓ public API ↓↓↓↓ and ↑↑↑↑ private API ↑↑↑↑------------------------*/
-    public Result register(User user);
+    public Result register(User user, HttpServletRequest request);
 
     public User loginByPwd(User user);
     public Result loginByVerifyCode(User user);
 
     public Result attachToSchool(User user);
+
+    public Result sendVerifyCode(HttpServletRequest request,String tel,Integer type);
 
 
 

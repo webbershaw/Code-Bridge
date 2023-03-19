@@ -18,4 +18,11 @@ public class Course {
     private LocalDateTime endTime;
     private Short deleted;
 
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
 }

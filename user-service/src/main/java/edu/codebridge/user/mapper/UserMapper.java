@@ -31,7 +31,7 @@ public interface UserMapper {
             "(#{imagePath},#{schoolName},#{schoolIntro}) ")
     public School insertSchool(School school);
 
-    @Insert("insert into user (username,pwd,tel) values (#{username},#{pwd},#{tel})")
+
     public User insertUser(User user);
 
 
