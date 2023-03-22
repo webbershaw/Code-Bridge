@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users/")
@@ -28,6 +29,12 @@ public class UserController {
         return user;
     }
 
+    @PostMapping("/pr")
+    public List<User> queryUsersByIds(@RequestBody List<Long> ids){
+        return userService.queryUsersByIds(ids);
+    }
+
+
 
 
     /*-----------------Division of ↓↓↓↓ public API ↓↓↓↓ and ↑↑↑↑ private API ↑↑↑↑------------------------*/
@@ -39,7 +46,7 @@ public class UserController {
         return userService.register(user,httpServletRequest);
     }
 
-    @PostMapping("/login")
+    @PostMapping("/loginByPwd")
     public Result loginByPwd(HttpServletRequest httpServletRequest,@RequestBody User user){
         HttpSession session = httpServletRequest.getSession();
         if (user.getTel() == null) {
@@ -60,6 +67,12 @@ public class UserController {
 
     }
 
+    @PostMapping("/loginByVerifyCode")
+    public Result loginByVerifyCode(@RequestBody User user,HttpServletRequest request){
+        return userService.loginByVerifyCode(user,request);
+    }
+
+
     @GetMapping("/verifyCode/{type}/{tel}")
     public Result sendVerifyCode(@PathVariable Integer type,@PathVariable String tel,HttpServletRequest request){
         Result result = null;
@@ -70,6 +83,8 @@ public class UserController {
         }
         return result;
     }
+
+
 
 
 

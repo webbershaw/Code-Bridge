@@ -34,6 +34,8 @@ public interface UserMapper {
 
     public User insertUser(User user);
 
+    public List<User> queryUsersByIds(List<Long> ids);
+
 
 
 

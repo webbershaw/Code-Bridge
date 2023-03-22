@@ -25,9 +25,11 @@ public interface UserService {
      */
     public List<User> getUsersByCondition(User user);
 
+   public User queryUserById(Integer id);
 
 
-    public User queryUserById(Integer id);
+
+   public List<User> queryUsersByIds(List<Long> ids);
 
 
 
@@ -35,7 +37,7 @@ public interface UserService {
     public Result register(User user, HttpServletRequest request);
 
     public User loginByPwd(User user);
-    public Result loginByVerifyCode(User user);
+    public Result loginByVerifyCode(User user,HttpServletRequest request);
 
     public Result attachToSchool(User user);
 

@@ -35,6 +35,8 @@ spring:
     username: wenboxiao@stu.hunau.edu.cn
     password: Xiaoge0225
     default-encoding: utf-8
+  jackson:
+    default-property-inclusion: non_null
 mybatis:
   type-aliases-package: edu.codebridge.course.mapper
   mapper-locations: classpath*:mapper/*.xml

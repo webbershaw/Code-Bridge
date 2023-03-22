@@ -5,6 +5,7 @@ import edu.codebridge.feign.entity.Result;
 import edu.codebridge.feign.entity.User;
 import edu.codebridge.user.mapper.UserMapper;
 import edu.codebridge.user.service.UserService;
+import edu.codebridge.user.util.PrivateInfoRemoval;
 import edu.codebridge.user.util.PwdEncodingUtil;
 import edu.codebridge.user.util.SenderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User queryUserById(Integer id) {
         return userMapper.queryById(id);
+    }
+
+    @Override
+    public List<User> queryUsersByIds(List<Long> ids) {
+        return userMapper.queryUsersByIds(ids);
     }
 
     @Override
@@ -77,12 +83,20 @@ public class UserServiceImpl implements UserService {
         }
         //获取发送验证码时存入Session中的验证码
         Object verifyCodeObj = session.getAttribute("verifyCode");
+        Object verifyTelObj = session.getAttribute("verifyTel");
+        String verifyTel =null;
+
+
         int verifyCode =0;
-        if(verifyCodeObj!=null){
+        if(verifyCodeObj!=null&&verifyTelObj!=null){
             verifyCode=(int)verifyCodeObj;
+            verifyTel=(String)verifyTelObj;
         }else {
             //验证码不存在则返回前端错误信息
             return new Result(ErrorCode.ERR,false,"请先完成手机号码验证");
+        }
+        if(!verifyTel.equals(user.getTel())){//防止用户发送验证码后修改手机号
+            return new Result(ErrorCode.ERR,null,"你这招偷天换月玩的不太行呀！");
         }
         //获取发送验证码的时间和当前时间的间隔
         long gapTime=(System.currentTimeMillis()-verifyCodeTime)/1000;
@@ -125,7 +139,50 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result loginByVerifyCode(User user) {
+    public Result loginByVerifyCode(User user,HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Object verifyCodeTimeObj = session.getAttribute("loginVerifyCodeTime");//获取发送验证码时存入Session中的验证码发送时间
+        long verifyCodeTime =0;
+        if(verifyCodeTimeObj!=null){
+            verifyCodeTime=(long)verifyCodeTimeObj;
+        }
+        //获取发送验证码时存入Session中的验证码
+        Object verifyCodeObj = session.getAttribute("loginVerifyCode");
+        Object verifyTelObj = session.getAttribute("loginVerifyTel");
+        String verifyTel =null;
+
+
+        int verifyCode =0;
+        if(verifyCodeObj!=null&&verifyTelObj!=null){
+            verifyCode=(int)verifyCodeObj;
+            verifyTel=(String)verifyTelObj;
+        }else {
+            //验证码不存在则返回前端错误信息
+            return new Result(ErrorCode.ERR,false,"请先完成手机号码验证");
+        }
+        if(!verifyTel.equals(user.getTel())){//防止用户发送验证码后修改手机号
+            return new Result(ErrorCode.ERR,null,"你这招偷天换月玩的不太行呀！");
+        }
+        //获取发送验证码的时间和当前时间的间隔
+        long gapTime=(System.currentTimeMillis()-verifyCodeTime)/1000;
+        if(verifyCode==0){
+            return new Result(ErrorCode.ERR,false,"手机号码验证失败");
+        } else if (user.getVerifyCode()!=verifyCode) {//验证码错误
+            return new Result(ErrorCode.ERR,false,"验证码错误");
+        } else if (gapTime>180) {//验证码发送时间与当前间隔大于三分钟
+            System.out.println(gapTime);
+            return new Result(ErrorCode.ERR,false,"验证码已过期，请重试");
+        }
+
+        User user1 = userMapper.queryByTel(user.getTel());
+
+        if(user1!=null){
+            session.setAttribute("user",user1);
+            user1 = PrivateInfoRemoval.removeAllPrivateInfo(user1);
+            return new Result(ErrorCode.OK,user1,"登录成功");
+        }
+
+
         return null;
     }
 
@@ -134,18 +191,28 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    /**
+     * 发送验证码的服务，可以发送登录、注册和找回三种类型的验证码，通过type的值进行指定，值的常量放在SenderUtil中
+     * @param request
+     * @param tel
+     * @param type
+     * @return result
+     */
     @Override
     public Result sendVerifyCode(HttpServletRequest request,String tel,Integer type) {
 
-        //根据场景为session设置不同的字段
+        //根据场景不同为session设置不同的字段
         String sessionName = null;
         String sessionTimeName = null;
+        String sessionTel = null;
         if(type==SenderUtil.LOGIN_TEXT_MESSAGE_CODE){
             sessionName="loginVerifyCode";
             sessionTimeName="loginVerifyCodeTime";
+            sessionTel="loginVerifyTel";
         }else if(type==SenderUtil.REGISTER_TEXT_MESSAGE_CODE){
             sessionName="verifyCode";
             sessionTimeName="verifyCodeTime";
+            sessionTel="verifyTel";
             User user = new User();
             user.setTel(tel);
             userMapper.queryByCondition(user);
@@ -153,6 +220,7 @@ public class UserServiceImpl implements UserService {
                 return new Result(ErrorCode.ERR,null,"该号码已被注册");
             }
         } else if (type==SenderUtil.FORGET_PWD_MESSAGE_CODE) {
+            sessionTel="findVerifyTel";
             sessionName="findVerifyCode";
             sessionTimeName="findVerifyCodeTime";
         }
@@ -186,6 +254,7 @@ public class UserServiceImpl implements UserService {
             return new Result(ErrorCode.ERR,null,"发送失败，请联系管理员");
         }
         session.setAttribute(sessionTimeName,System.currentTimeMillis());
+        session.setAttribute(sessionTel,tel);
 
         return new Result(ErrorCode.OK,null,"发送成功，请注意查收，180秒内有效");
 
