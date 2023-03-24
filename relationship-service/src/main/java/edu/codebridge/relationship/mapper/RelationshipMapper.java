@@ -144,6 +144,13 @@ public interface RelationshipMapper {
     @Select("select user_id from `student-task` where task_id = #{taskId}")
     public List<Long> queryUserIdByTaskId(Integer taskId);
 
+    /**
+     * 根据多个taskid查询userid
+     * @param taskIds
+     * @return List<Long>
+     */
+    public List<Long> queryUserIdByTaskIds(List<Integer> taskIds);
+
 
     /**
      * 根据userid查询taskid
@@ -151,8 +158,14 @@ public interface RelationshipMapper {
      * @return Integer
      */
     @Select("select task_id from `student-task` where user_id = #{userId}")
-    public Integer queryTaskIdByUserId(Long userId);
+    public List<Integer> queryTaskIdByUserId(Long userId);
 
+    /**
+     * 根据多个userid查询taskid
+     * @param userIds
+     * @return List<Integer>
+     */
+    public List<Integer> queryTaskIdByUserIds(List<Long> userIds);
 
     /**
      * 往数据表student-task插入数据
@@ -170,6 +183,36 @@ public interface RelationshipMapper {
 
 
     /*------------------------------------------------ClassTask--------------------------------*/
+
+    /**
+     * 根据classid查询taskid
+     * @param classId
+     * @return List<Integer>
+     */
+    @Select("select task_id from cb_relationship.`class-task` where class_id = #{classId}")
+    public List<Integer> queryTaskIdByClassId(Integer classId);
+
+    /**
+     * 根据多个classid查询taskid
+     * @param classIds
+     * @return List<Integer>
+     */
+    public List<Integer> queryTaskIdByClassIds(List<Integer> classIds);
+
+    /**
+     * 根据taskid查询classid
+     * @param taskId
+     * @return List<Integer>
+     */
+    @Select("select class_id from cb_relationship.`class-task` where task_id = #{taskId}")
+    public List<Integer> queryClassIdByTaskId(Integer taskId);
+
+    /**
+     * 根据多个taskid查询classid
+     * @param taskIds
+     * @return List<Integer>
+     */
+    public List<Integer> queryClassIdByTaskIds(List<Integer> taskIds);
 
     /**
      * 根据条件查询calsstask
@@ -271,5 +314,20 @@ public interface RelationshipMapper {
      * @return Boolean
      */
     public Boolean updateStudentClass(StudentClass studentClass);
+
+    /**
+     * 根据多个classid查询userid
+     * @param classIds
+     * @return List<Long>
+     */
+    public List<Long> queryUserIdByClassIds(List<Integer> classIds);
+
+    /**
+     * 根据多个userid查询classid
+     * @param userIds
+     * @return List<Integer>
+     */
+    public List<Integer> queryClassIdByUserIds(List<Long> userIds);
+
 
 }

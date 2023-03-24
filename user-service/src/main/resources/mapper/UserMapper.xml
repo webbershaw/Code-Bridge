@@ -141,7 +141,7 @@
         select id, username, email, avatar_url, identity, intro, certified, user.school_id, person_id, name, tel,school_name
         from user,school
         where deleted = 0 and user.school_id = school.school_id and id in
-        <foreach collection="list" item="id" open="(" separator="," close=")">
+        <foreach collection="list" item="id" open="(" separator="," close= ")">
             #{id}
         </foreach>
 
