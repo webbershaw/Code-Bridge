@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.codebridge.task.mapper.ResourceMapper">
+    <update id="updateResource">
+        update cb_task.resource
+        <set>
+            <if test="resourceId != null and resourceId != '' ">
+                resource_id = #{resourceId},
+            </if>
+            <if test="resourceType != null and resourceType != '' ">
+                resource_type = #{resourceType},
+            </if>
+            <if test="title != null and title != '' ">
+                title = #{title},
+            </if>
+            <if test="content != null and content != '' ">
+                content = #{content},
+            </if>
+            <if test="resourceUrl != null and resourceUrl != '' ">
+                resource_url = #{resourceUrl},
+            </if>
+            <if test="classificationId != null and classificationId != '' ">
+                classification_id = #{classificationId}
+            </if>
+        </set>
+    </update>
+
+    <select id="queryResourceByCondition" resultType="edu.codebridge.feign.entity.Resource">
+        select * from cb_task.resource 
+        where deleted = 0
+        <if test="resourceId != null and resourceId != ''">
+            and resource_id = #{resourceId}
+        </if>
+        <if test="resourceType != null and resourceType != '' ">
+            and resource_type = #{resourceType}
+        </if>
+        <if test="title != null and title != '' ">
+            and title = #{title}
+        </if>
+        <if test="content != null and content != '' ">
+            and content = #{content}
+        </if>
+        <if test="resourceUrl != null and resourceUrl != '' ">
+            and resource_url = #{resourceUrl}
+        </if>
+        <if test="classificationId != null and classificationId != '' ">
+            and classification_id = #{classificationId}
+        </if>
+    </select>
+</mapper>

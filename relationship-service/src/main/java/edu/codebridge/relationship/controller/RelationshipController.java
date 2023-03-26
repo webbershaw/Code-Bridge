@@ -1,15 +1,23 @@
 package edu.codebridge.relationship.controller;
 
+import edu.codebridge.feign.code.ErrorCode;
+import edu.codebridge.feign.entity.Result;
 import edu.codebridge.feign.entity.StudentClass;
+import edu.codebridge.feign.entity.StudentTaskResource;
 import edu.codebridge.relationship.mapper.RelationshipMapper;
+import edu.codebridge.relationship.service.StudentTaskResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
 @RequestMapping("/relationships")
 public class RelationshipController {
+
+    @Autowired
+    StudentTaskResourceService studentTaskResourceService;
 
     @Autowired
     RelationshipMapper relationshipMapper;
@@ -26,12 +34,12 @@ public class RelationshipController {
         return relationshipMapper.queryClassIdByUserId(userId);
     }
 
-    @GetMapping("/pr/queryUserIdByClassIds")
+    @PostMapping("/pr/queryUserIdByClassIds")
     public List<Long> queryUserIdByClassIds(@RequestBody List<Integer> classIds){
         return relationshipMapper.queryUserIdByClassIds(classIds);
     }
 
-    @GetMapping("/pr/queryClassIdByUserIds")
+    @PostMapping("/pr/queryClassIdByUserIds")
     public List<Integer> queryClassIdByUserIds(@RequestBody List<Long> userIds){
         return relationshipMapper.queryClassIdByUserIds(userIds);
     }
@@ -44,7 +52,7 @@ public class RelationshipController {
         return relationshipMapper.queryTaskIdByClassId(classId);
     }
 
-    @GetMapping("/pr/queryTaskIdByClassIds")
+    @PostMapping ("/pr/queryTaskIdByClassIds")
     public List<Integer> queryTaskIdByClassIds(@RequestBody List<Integer> classIds){
         return relationshipMapper.queryTaskIdByClassIds(classIds);
     }
@@ -54,7 +62,7 @@ public class RelationshipController {
         return relationshipMapper.queryClassIdByTaskId(taskId);
     }
 
-    @GetMapping("/pr/queryClassIdByTaskIds")
+    @PostMapping("/pr/queryClassIdByTaskIds")
     public List<Integer> queryClassIdByTaskIds(@RequestBody List<Integer> taskIds){
         return relationshipMapper.queryClassIdByTaskIds(taskIds);
     }
@@ -67,7 +75,7 @@ public class RelationshipController {
         return relationshipMapper.queryUserIdByTaskId(taskId);
     }
 
-    @GetMapping("/pr/queryUserIdByTaskIds")
+    @PostMapping("/pr/queryUserIdByTaskIds")
     public List<Long> queryUserIdByTaskIds(@RequestBody List<Integer> taskIds){
         return relationshipMapper.queryUserIdByTaskIds(taskIds);
     }
@@ -77,7 +85,7 @@ public class RelationshipController {
         return relationshipMapper.queryTaskIdByUserId(userId);
     }
 
-    @GetMapping("/pr/queryTaskIdByUserIds")
+    @PostMapping("/pr/queryTaskIdByUserIds")
     public List<Integer> queryTaskIdByUserIds(@RequestBody List<Long> userIds){
         return relationshipMapper.queryTaskIdByUserIds(userIds);
     }
@@ -88,7 +96,18 @@ public class RelationshipController {
     /*-----------------------------------------*/
 
 
+
     /*-----------------Division of ↓↓↓↓ public API ↓↓↓↓ and ↑↑↑↑ private API ↑↑↑↑------------------------*/
+
+    @PostMapping("/StudentTaskResource")
+    public Result insertStudentTaskResource(@RequestBody StudentTaskResource studentTaskResource, HttpServletRequest request){
+        try {
+            return studentTaskResourceService.insertStudentTaskResource(request, studentTaskResource);
+        } catch (Exception e) {
+            return new Result(ErrorCode.ERR,null,"出错啦！服务异常");
+        }
+    }
+
 
 
 }

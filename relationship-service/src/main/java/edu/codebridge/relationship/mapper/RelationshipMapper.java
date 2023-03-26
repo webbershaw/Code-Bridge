@@ -77,8 +77,8 @@ public interface RelationshipMapper {
      * @param studentTaskResource
      */
 
-    @Insert("insert into `student-task-resource` (user_id, task_id, resource_id, `status`, score)" +
-            " values (#{userIde},#{taskId},#{resourceId},#{status},#{score})")
+    @Insert("insert into `student-task-resource` (user_id, task_id, resource_id, `status`, score, answer)" +
+            " values (#{userIde},#{taskId},#{resourceId},#{status},#{score},#{answer})")
     public Boolean insertStudentTaskResource(StudentTaskResource studentTaskResource);
 
     /**
@@ -94,7 +94,6 @@ public interface RelationshipMapper {
      * @return List<StudentTaskResource>
      */
     public List<StudentTaskResource> queryStudentTasksResourceByCondition(StudentTaskResource studentTaskResource);
-
 
 
 

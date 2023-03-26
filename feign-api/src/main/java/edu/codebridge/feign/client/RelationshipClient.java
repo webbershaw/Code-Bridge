@@ -3,6 +3,7 @@ package edu.codebridge.feign.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -10,45 +11,45 @@ import java.util.List;
 @FeignClient(value = "relationship-service")
 public interface RelationshipClient {
 
-    @GetMapping("/pr/queryUserIdByClassId/{classId}")
-    public List<Long> queryUserIdByClassId(Integer classId);
+    @GetMapping("/relationships/pr/queryUserIdByClassId/{classId}")
+    public List<Long> queryUserIdByClassId(@PathVariable Integer classId);
 
-    @GetMapping("/pr/queryClassIdByUserId/{userId}")
-    public List<Integer> queryClassIdByUserId(Long userId);
+    @GetMapping("/relationships/pr/queryClassIdByUserId/{userId}")
+    public List<Integer> queryClassIdByUserId(@PathVariable Long userId);
 
-    @GetMapping("/pr/queryUserIdByClassIds")
+    @PostMapping("/relationships/pr/queryUserIdByClassIds")
     public List<Long> queryUserIdByClassIds(@RequestBody List<Integer> classIds);
 
-    @GetMapping("/pr/queryClassIdByUserIds")
+    @PostMapping("/relationships/pr/queryClassIdByUserIds")
     public List<Integer> queryClassIdByUserIds(@RequestBody List<Long> userIds);
 
 
 
 
-    @GetMapping("/pr/queryTaskIdByClassId/{classId}")
+    @GetMapping("/relationships/pr/queryTaskIdByClassId/{classId}")
     public List<Integer> queryTaskIdByClassId(@PathVariable Integer classId);
 
-    @GetMapping("/pr/queryTaskIdByClassIds")
+    @PostMapping("/relationships/pr/queryTaskIdByClassIds")
     public List<Integer> queryTaskIdByClassIds(@RequestBody List<Integer> classIds);
 
-    @GetMapping("/pr/queryClassIdByTaskId/{taskId}")
+    @GetMapping("/relationships/pr/queryClassIdByTaskId/{taskId}")
     public List<Integer> queryClassIdByTaskId(@PathVariable Integer taskId);
 
-    @GetMapping("/pr/queryClassIdByTaskIds")
+    @PostMapping("/relationships/pr/queryClassIdByTaskIds")
     public List<Integer> queryClassIdByTaskIds(@RequestBody List<Integer> taskIds);
 
 
 
 
-    @GetMapping("/pr/queryUserIdByTaskId/{taskId}")
+    @GetMapping("/relationships/pr/queryUserIdByTaskId/{taskId}")
     public List<Long> queryUserIdByTaskId(@PathVariable Integer taskId);
 
-    @GetMapping("/pr/queryUserIdByTaskIds")
+    @PostMapping("/relationships/pr/queryUserIdByTaskIds")
     public List<Long> queryUserIdByTaskIds(@RequestBody List<Integer> taskIds);
 
-    @GetMapping("/pr/queryTaskIdByUserId/{userId}")
+    @GetMapping("/relationships/pr/queryTaskIdByUserId/{userId}")
     public List<Integer> queryTaskIdByUserId(@PathVariable Long userId);
 
-    @GetMapping("/pr/queryTaskIdByUserIds")
+    @PostMapping("/relationships/pr/queryTaskIdByUserIds")
     public List<Integer> queryTaskIdByUserIds(@RequestBody List<Long> userIds);
 }
