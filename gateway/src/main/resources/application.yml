@@ -38,12 +38,14 @@ spring:
             maxAge: 360000
             allow-credentials: true
             allowed-origins:
-              - "http://localhost:80"
-              - "http://localhost:8088"
+              - "http://127.0.0.1:80"
+              - "http://128.0.0.1:8088"
+              - "http://127.0.0.1:63343"
               - "http://codebridge.cn"
               - "http://www.codebridge.cn"
               - "https://codebridge.cn"
               - "https://www.codebridge.cn"
+              - "http://localhost:63343"
             allowed-methods:
               - "GET"
               - "POST"

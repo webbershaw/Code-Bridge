@@ -42,6 +42,7 @@ public interface UserService {
     public Result attachToSchool(User user);
 
     public Result sendVerifyCode(HttpServletRequest request,String tel,Integer type);
+    public Result checkTel(String tel);
 
 
 

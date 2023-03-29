@@ -41,10 +41,10 @@ public class UserController {
 
     @PostMapping("/")
     public Result register(HttpServletRequest httpServletRequest, @PathVariable User user){
-
-
         return userService.register(user,httpServletRequest);
     }
+
+
 
     @PostMapping("/loginByPwd")
     public Result loginByPwd(HttpServletRequest httpServletRequest,@RequestBody User user){
@@ -79,9 +79,15 @@ public class UserController {
         try {
             result = userService.sendVerifyCode(request, tel, type);
         } catch (Exception e) {
+            System.out.println(e);
             return new Result(ErrorCode.ERR,null,"发送失败，请联系管理员");
         }
         return result;
+    }
+
+    @GetMapping("/checkTel/{tel}")
+    public  Result checkTel(@PathVariable String tel){
+        return userService.checkTel(tel);
     }
 
 

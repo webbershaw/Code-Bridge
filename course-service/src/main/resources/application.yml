@@ -7,12 +7,12 @@ spring:
         server-addr: localhost:8848
         discovery:
           cluster-name: Changsha #配置集群
-#          namespace: 432f5be3-ff68-473f-86ef-e7d43c8e990f #命名空间
+  #          namespace: 432f5be3-ff68-473f-86ef-e7d43c8e990f #命名空间
   #        ephemeral: false #设置为永久实例
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://home.codebridge.cn:3306/cb_course
+    url: jdbc:mysql://home.codebridge.cn:3306/cb_relationship
     username: root
     password: Yy336699
     type: com.alibaba.druid.pool.DruidDataSource
@@ -37,8 +37,14 @@ spring:
     default-encoding: utf-8
   jackson:
     default-property-inclusion: non_null
+  cloud:
+    nacos:
+      config:
+        cluster-name: Changsha
+      discovery:
+        cluster-name: Changsha
 mybatis:
-  type-aliases-package: edu.codebridge.course.mapper
+  type-aliases-package: edu.codebridge.relationship.mapper
   mapper-locations: classpath*:mapper/*.xml
   configuration:
     cache-enabled: true

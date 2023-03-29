@@ -37,6 +37,13 @@ spring:
     default-encoding: utf-8
   jackson:
     default-property-inclusion: non_null
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        cluster-name: Changsha
+      discovery:
+        cluster-name: Changsha
 mybatis:
   type-aliases-package: edu.codebridge.task.mapper
   mapper-locations: classpath*:mapper/*.xml
