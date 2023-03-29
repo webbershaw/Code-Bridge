@@ -1,15 +1,18 @@
 
+
 spring:
   application:
     name: user-service
-    cloud:
-      nacos:
-        server-addr: localhost:8848
-        discovery:
-          cluster-name: Changsha #配置集群
-#          namespace: 432f5be3-ff68-473f-86ef-e7d43c8e990f #命名空间
+  #          namespace: 432f5be3-ff68-473f-86ef-e7d43c8e990f #命名空间
   #        ephemeral: false #设置为永久实例
-
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      discovery:
+        cluster-name: Changsha
+      config:
+        cluster-name: Changsha
+        server-addr: localhost:8848
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://home.codebridge.cn:3306/cb_user
@@ -44,9 +47,19 @@ mybatis:
     cache-enabled: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     map-underscore-to-camel-case: true
-
 server:
   port: 8084
+  servlet:
+    session:
+      cookie:
+
+       # 设置 SameSite 属性为 None
+        secure: true
+        # 启用 Secure 属性
+        comment:
+        same-site: none
+
+
 
 
 

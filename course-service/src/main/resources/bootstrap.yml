@@ -1,6 +1,6 @@
 spring:
   application:
-    name: relationship-service
+    name: course-service
   profiles:
     active: dev
   cloud:

@@ -93,6 +93,9 @@
             <if test="name !=null and name !='' ">
                 and name = #{name}
             </if>
+            <if test="tel !=null and tel !='' ">
+                and tel = #{tel}
+            </if>
 
 
     </select>

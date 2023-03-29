@@ -46,6 +46,7 @@ CREATE TABLE `classification` (
   PRIMARY KEY (`classification_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
 -- ----------------------------
 -- Records of classification
 -- ----------------------------
@@ -93,3 +94,13 @@ BEGIN;
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+
+
+
+
+
+
+

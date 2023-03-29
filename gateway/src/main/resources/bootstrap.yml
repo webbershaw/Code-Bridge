@@ -11,3 +11,4 @@ spring:
 #        namespace: 432f5be3-ff68-473f-86ef-e7d43c8e990f #命名空间
       config:
         file-extension: yaml
+

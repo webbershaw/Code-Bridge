@@ -213,10 +213,7 @@ public class UserServiceImpl implements UserService {
             sessionName="verifyCode";
             sessionTimeName="verifyCodeTime";
             sessionTel="verifyTel";
-            User user = new User();
-            user.setTel(tel);
-            userMapper.queryByCondition(user);
-            if(userMapper.queryByCondition(user)!=null){
+            if(userMapper.queryByTel(tel)!=null){
                 return new Result(ErrorCode.ERR,null,"该号码已被注册");
             }
         } else if (type==SenderUtil.FORGET_PWD_MESSAGE_CODE) {
@@ -230,6 +227,7 @@ public class UserServiceImpl implements UserService {
 
 
         HttpSession session = request.getSession();
+        System.out.println(session.getAttribute(sessionName) != null+"----------------------");
         if(session.getAttribute(sessionName)!=null){
             Object verifyCodeTimeObj = session.getAttribute(sessionTimeName);
             long verifyCodeTime =0;
@@ -239,6 +237,7 @@ public class UserServiceImpl implements UserService {
                 return new Result(ErrorCode.ERR,null,"上次发送时间未记录，请联系管理员");
             }
             long gapTime=(System.currentTimeMillis()-verifyCodeTime)/1000;
+            System.out.println(gapTime);
             if(gapTime<60){
                 return new Result(ErrorCode.ERR,null,"验证码已发送,请耐心等待，或在"+(60-gapTime)+"秒后重试");
             }
@@ -258,5 +257,18 @@ public class UserServiceImpl implements UserService {
 
         return new Result(ErrorCode.OK,null,"发送成功，请注意查收，180秒内有效");
 
+    }
+
+    @Override
+    public Result checkTel(String tel){
+
+        String regex2 = "^((\\+86)|(86))?((13[0-9])|(14[5|7])|(15[0-3|5-9])|(17[0-1|3|5-8])|(18[0-9])|(19[0-9]))\\d{8}$";
+        if(!tel.matches(regex2)){
+
+            return new Result(ErrorCode.ERR,false,"电话号码格式有误");
+        }else if(userMapper.queryByTel(tel)!=null){
+            return new Result(ErrorCode.ERR,false,"该电话号码已经注册，换一个吧！");
+        }
+        return new Result(ErrorCode.OK,true,"欧耶，该电话号码可以注册");
     }
 }
