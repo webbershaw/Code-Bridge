@@ -11,4 +11,6 @@ public class StudentTaskResource {
     private Short status;
     private Double score;
 
+    private String answer;
+
 }

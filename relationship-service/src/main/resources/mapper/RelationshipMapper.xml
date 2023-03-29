@@ -8,10 +8,10 @@
     <select id="queryClassTasksByCondition" resultType="edu.codebridge.feign.entity.ClassTask">
         SELECT * FROM cb_relationship.`class-task`
         WHERE deleted = 0
-        <if test="classId != null and classId != '0' and classId != '' " >
+        <if test="classId != null and classId != '' " >
             and class_id = #{classId}
         </if>
-        <if test="taskId != null and taskId != '0' and taskId != '' ">
+        <if test="taskId != null and taskId != '' ">
             and task_id = #{taskId}
         </if>
         <if test="startTime != null and startTime !='' ">
@@ -44,10 +44,10 @@
     <select id="queryClassTaskByCondition" resultType="edu.codebridge.feign.entity.ClassTask">
         SELECT * FROM cb_relationship.`class-task`
         WHERE deleted = 0
-        <if test="classId != null and classId != '0' and classId != '' " >
+        <if test="classId != null  and classId != '' " >
             and class_id = #{classId}
         </if>
-        <if test="taskId != null and taskId != '0' and taskId != ''  ">
+        <if test="taskId != null and taskId != ''  ">
             and task_id = #{taskId}
         </if>
         <if test="startTime != null and startTime !='' ">
@@ -79,10 +79,10 @@
     <update id="updateClassTask">
         update cb_relationship.`class-task`
         <set>
-            <if test="classId != null and classId != '0' and classId != '' " >
+            <if test="classId != null and classId != '' " >
                 class_id = #{classId},
             </if>
-            <if test="taskId != null and taskId != '0' and taskId != '' ">
+            <if test="taskId != null and taskId != '' ">
                 task_id = #{taskId},
             </if>
             <if test="startTime != null and startTime !='' ">
@@ -113,16 +113,30 @@
         WHERE deleted = 0;
     </update>
 
+    <select id="queryTaskIdByClassIds" resultType="java.lang.Integer">
+        select task_id from cb_relationship.`class-task` where class_id in
+        <foreach collection="list" item="classId" open="(" separator="," close= ")">
+            #{classId}
+        </foreach>
+    </select>
+
+    <select id="queryClassIdByTaskIds" resultType="java.lang.Integer">
+        select class_id from cb_relationship.`class-task` where task_id in
+        <foreach collection="list" item="taskId" open="(" separator="," close= ")">
+            #{taskId}
+        </foreach>
+    </select>
+
 
 
     <!--.......................................................StudentClass...............................................-->
     <update id="updateStudentClass">
         update cb_relationship.`student-class`
         <set>
-            <if test="userId != null and userId != '' and userId != '0' ">
+            <if test="userId != null and userId != '' ">
                 use_id = #{userId},
             </if>
-            <if test="classId != null and classId != '' and classId != '0' ">
+            <if test="classId != null and classId != ''  ">
                 class_id = #{classId}
             </if>
         </set>
@@ -132,34 +146,51 @@
     <select id="queryStudentClassesByCondition" resultType="edu.codebridge.feign.entity.StudentClass">
         SELECT * FROM cb_relationship.`student-class`
         WHERE
-        <if test="userId != null and userId != '' and userId != '0' ">
+        <if test="userId != null and userId != '' ">
             user_id = #{userId}
         </if>
-        <if test="classId != null and classId != '' and classId != '0' ">
+        <if test="classId != null and classId != ''  ">
             and class_id = #{classId}
         </if>
+    </select>
+
+    <select id="queryUserIdByClassIds" resultType="java.lang.Long">
+        select user_id from cb_relationship.`student-class` where class_id in
+        <foreach collection="list" item="classId" open="(" separator="," close= ")">
+            #{classId}
+        </foreach>
+    </select>
+
+    <select id="queryClassIdByUserIds" resultType="java.lang.Integer">
+        select class_id from cb_relationship.`student-class` where user_id in
+        <foreach collection="list" item="userId" open="(" separator="," close= ")">
+            #{userId}
+        </foreach>
     </select>
     
     
     
-    <!--....................................................................StudentTaskResource..................................................-->
+    <!--........................................................StudentTaskResource..................................................-->
     <update id="updateStudentTaskResource">
         update cb_relationship.`student-task-resource`
         <set>
-            <if test="userId != null and userId !='' and userId != '0' ">
+            <if test="userId != null and userId !=''  ">
                 user_id = #{userId},
             </if>
-            <if test="taskId != null and taskId != '' and taskId != '0' ">
+            <if test="taskId != null and taskId != ''  ">
                 task_id = #{taskId},
             </if>
-            <if test="resourceId != null and resourceId != '' and resourceId != '0' ">
+            <if test="resourceId != null and resourceId != ''  ">
                 resource_id = #{resourceId},
             </if>
             <if test="status != null and status != '' ">
                 `status` = #{status},
             </if>
             <if test="score != null and score !='' ">
-                score = #{score}
+                score = #{score},
+            </if>
+            <if test="answer != null and answer != '' ">
+                answer = #{answer}
             </if>
         </set>
     </update>
@@ -167,13 +198,13 @@
     <select id="queryStudentTasksResourceByCondition" resultType="edu.codebridge.feign.entity.StudentTaskResource">
         SELECT * FROM cb_relationship.`student-task-resource`
         WHERE
-        <if test="userId != null and userId !='' and userId != '0' ">
+        <if test="userId != null and userId !=''  ">
             user_id = #{userId}
         </if>
-        <if test="taskId != null and taskId != '' and taskId != '0' ">
+        <if test="taskId != null and taskId != ''  ">
             and task_id = #{taskId}
         </if>
-        <if test="resourceId != null and resourceId != '' and resourceId != '0' ">
+        <if test="resourceId != null and resourceId != '' ">
             and resource_id = #{resourceId}
         </if>
         <if test="status != null and status != '' ">
@@ -181,6 +212,9 @@
         </if>
         <if test="score != null and score !='' ">
             and score = #{score}
+        </if>
+        <if test="answer != null and answer != '' ">
+            and answer = #{answer}
         </if>
     </select>
 
@@ -190,10 +224,10 @@
     <select id="queryStudentTasksByCondition" resultType="edu.codebridge.feign.entity.StudentTask">
         SELECT * FROM cb_relationship.`student-task`
         WHERE
-        <if test="userId != null and userId != '' and userId != '0' ">
+        <if test="userId != null and userId != '' ">
             user_id = #{userId}
         </if>
-        <if test="taskId != null and taskId != '' and taskId != '0' ">
+        <if test="taskId != null and taskId != ''  ">
             and task_id = #{taskId}
         </if>
         <if test="status != null and status != '' ">
@@ -207,15 +241,26 @@
         </if>
     </select>
 
-
+    <select id="queryUserIdByTaskIds" resultType="java.lang.Long">
+        select user_id from `student-task` where task_id in
+        <foreach collection="list" item="taskId" open="(" separator="," close= ")">
+            #{taskId}
+        </foreach>
+    </select>
+    <select id="queryTaskIdByUserIds" resultType="java.lang.Integer">
+        select task_id from `student-task` where user_id in
+        <foreach collection="list" item="userId" open="(" separator="," close= ")">
+            #{userId}
+        </foreach>
+    </select>
 
     <update id="updateStudentTasks">
         UPDATE cb_relationship.`student-task`
         <set>
-            <if test="userId != null and userId != '' and userId != '0' ">
+            <if test="userId != null and userId != '' ">
                 user_id = #{userId},
             </if>
-            <if test="taskId != null and taskId != '' and taskId != '0' ">
+            <if test="taskId != null and taskId != ''  ">
                 task_id = #{taskId},
             </if>
             <if test="status != null and status != '' ">
