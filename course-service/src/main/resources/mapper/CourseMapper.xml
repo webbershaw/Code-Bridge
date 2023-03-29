@@ -3,9 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.codebridge.course.mapper.CourseMapper">
+    <resultMap id="courseMap" type="edu.codebridge.feign.entity.Course">
+        <id column="course_id" property="courseId"/>
+        <result column="course_name" property="courseName"/>
+        <result column="course_intro" property="courseIntro"/>
+        <result column="start_time" property="startTime"/>
+        <result column="end_time" property="endTime"/>
+        <result column="user_id" property="userId"/>
+        <result column="model_id" property="modelId"/>
+        <result column="deleted" property="deleted"/>
+        <collection property="classes" resultMap="edu.codebridge.course.mapper.ClassMapper.classMap2"/>
+
+    </resultMap>
 
 
-    <insert id="addCourse">
+    <insert id="addCourse" keyColumn="course_id" keyProperty="courseId">
         INSERT INTO course(
     course_id,
     course_name,
@@ -28,7 +40,6 @@
     </insert>
 
     <update id="updateCourseById">
-
         update course
         <set>
 <!--            <if test="course_id !=null and course_id !=0 ">-->
@@ -58,4 +69,28 @@
         </set>
             where course_id = #{courseId};
     </update>
+<!--    <select id="queryClassByIds" resultMap="courseMap">-->
+<!--        select  course.*-->
+<!--        from course,class where course.course_id=class.course_id and course.course_id in-->
+<!--        <foreach collection="list" item="id" open="(" separator= "," close=")" >-->
+<!--            #{id}-->
+<!--        </foreach>-->
+<!--    </select>-->
+    <select id="queryClassById" resultType="edu.codebridge.feign.entity.Class">
+        SELECT * FROM class ,course WHERE class.course_id=course.course_id AND class.deleted=0 and course.course_id=#{courseId}
+    </select>
+    <select id="queryCoursesByUserId" resultMap="courseMap">
+        SELECT * FROM course ,class WHERE  course.course_id=class.course_id AND course.user_id=#{userId} AND course.deleted=0    </select>
+    <select id="queryCoursesByUserIds" resultType="edu.codebridge.feign.entity.Course">
+        select * from  course where course.deleted=0 and user_id in
+        <foreach collection="list" item="id" open="(" separator= "," close=")" >
+                    #{id}
+                </foreach>
+    </select>
+    <select id="getCourseById" resultMap="courseMap">
+        select *
+        from course left join class on course.course_id=class.course_id where course.course_id=#{courseId} and deleted=0;
+    </select>
+
+
 </mapper>

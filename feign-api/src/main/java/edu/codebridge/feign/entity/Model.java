@@ -1,5 +1,6 @@
 package edu.codebridge.feign.entity;
 
+import edu.codebridge.feign.client.UserClient;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -15,7 +16,7 @@ public class Model {
     private LocalDateTime createdTime;
     private Short deleted;
     private Integer  classificationId;
-
-
+    private User user;
+    private Long userId;
 
 }

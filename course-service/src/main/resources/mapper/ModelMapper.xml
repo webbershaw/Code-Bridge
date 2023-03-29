@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.codebridge.course.mapper.ModelMapper">
+
+
+    <insert id="addModel" keyColumn="model_id" keyProperty="modelId">
+        INSERT INTO model(
+            model_id,
+            model_name,
+            is_public,
+            user_id,
+            classification_id
+        )
+        VALUES
+            (
+                #{modelId},
+                #{modelName},
+                #{isPublic},
+                #{userId},
+                #{classificationId}
+
+            );
+
+
+
+    </insert>
+    <update id="updateModelById">
+        update model
+        <set>
+
+            <if test="modelName !=null and modelName  !='' ">
+                model_name = #{modelName},
+            </if>
+            <if test="isPublic !=null and isPublic !='' ">
+                is_public = #{isPublic},
+            </if>
+            <if test="createdTime !=null and createdTime  !='' ">
+                created_time  = #{createdTime},
+            </if>
+            <if test="classificationId !=null and classificationId !='' ">
+                classification_id = #{classificationId},
+            </if>
+            <if test="deleted !=null and deleted !='' ">
+                deleted = #{deleted},
+        </if>
+        </set>
+        where model_id = #{modelId};
+    </update>
+    <select id="queryByKeyWord" resultType="edu.codebridge.feign.entity.Model">
+
+    select * from model where is_public=1 and model_name like #{name}
+    </select>
+    <select id="queryModelByUserId" resultType="edu.codebridge.feign.entity.Model">
+        select *
+        from model where user_id =#{userId} and deleted=0
+    </select>
+</mapper>

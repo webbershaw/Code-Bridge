@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.codebridge.course.mapper.ClassMapper">
+    <resultMap id="classMap" type="edu.codebridge.feign.entity.Class">
+        <id column="class_id" property="classId"  />
+        <result column="user_id" property="userId"  />
+        <result column="class_name" property="className"/>
+        <result column="course_id" property="courseId"/>
+        <result column="class_name" property="className"/>
+        <association property="course" >
+            <id property="courseId" column="course_id"/>
+            <result property="courseIntro" column="course_intro"/>
+            <result property="userId" column="user_id"/>
+            <result property="courseName" column="course_name"/>
+            <result property="endTime" column="end_time"/>
+            <result property="startTime" column="start_time"/>
+            <result property="modelId" column="model_id"/>
+            <result property="deleted" column="deleted"/>
+        </association>
+        <!--      <collection property="course" select="queryCourseById" ofType="edu.codebridge.feign.entity.Course"></collection>-->
+
+    </resultMap>
+    <resultMap id="classMap2" type="edu.codebridge.feign.entity.Class">
+        <id column="class_id" property="classId"  />
+        <result column="user_id" property="userId"  />
+        <result column="class_name" property="className"/>
+        <result column="course_id" property="courseId"/>
+        <result column="class_name" property="className"/>
+    </resultMap>
+
+
+
+    <insert id="addClass" keyProperty="classId" keyColumn="class_id">
+        INSERT INTO class(
+            class_id,
+            course_id,
+            user_id,
+            class_name
+
+        )
+        VALUES
+            (
+                #{classId},
+                #{courseId},
+                #{userId},
+                #{className}
+
+            );
+    </insert>
+    <update id="updateClassById">
+
+        update class
+        <set>
+
+            <if test="courseId !=null and courseId  !='' ">
+                course_id = #{courseId},
+            </if>
+            <if test="userId !=null and userId !='' ">
+               user_id = #{userId},
+            </if>
+            <if test="className !=null and className !='' ">
+                class_name = #{className},
+            </if>
+            <if test="deleted !=null and deleted !='' ">
+                deleted = #{deleted},
+            </if>
+        </set>
+        where class_id = #{classId};
+    </update>
+
+<!--    resultType="edu.codebridge.feign.entity.Class-->
+    <select id="queryClassByIds" resultMap="classMap" >
+        select * from class left join course on class.course_id=course.course_id where class.deleted=0 and class_id in
+        <foreach collection="classIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+    <select id="queryUserIdByClassId" resultType="java.lang.Long">
+        select user_id
+        from class where deleted=0 and  class_id=#{classId}
+    </select>
+    <select id="queryUerIdsByClassIds" resultType="java.lang.Long">
+        select user_id
+        from class where deleted=0 and class_id in
+        <foreach collection="classIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
+
+
+
+    <!--        //couserIds-->
+
+
+<!--    <select id="queryCourseById" resultMap="classMap">-->
+<!--        select * from course where course_id=#{courseId} and deleted=0-->
+<!--    </select>-->
+<!--    <select id="queryClassByIds" resultType="classMap">-->
+<!--    select * from class where  class_id=-->
+<!--                               <foreach collection="ids" item="id" open="(" separator="," close=")">-->
+<!--                               #{id}-->
+<!--                            </foreach>-->
+
+<!--    </select>-->
+    <!--    <select id="queryClassById" resultMap="edu.codebridge.feign.entity.Class">-->
+<!--        select  * from course,class where course.course_id = class.course_id and class.class_id=#{classId}-->
+
+<!--    </select>-->
+
+
+</mapper>

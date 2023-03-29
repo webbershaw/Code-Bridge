@@ -1,5 +1,6 @@
 package edu.codebridge.course.mapper;
 
+import edu.codebridge.feign.entity.Class;
 import edu.codebridge.feign.entity.Course;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,12 +15,19 @@ import java.util.List;
 @Repository
 public interface CourseMapper {
     /**
-     * 通过id得到课程
+     * 通过course_id得到未被删除的课程
      * @return
      */
     @Select("select * from course where course_id=#{courseId} and deleted=0")
-    Course getCourseById(Long id);
+    Course getCourseByIdAndNoDeleted(Integer id);
 
+    /**
+     * 通过course_id得到的课程(包括被删除的课程)
+     * @param id
+     * @return
+     */
+//    @Select("select * from course where course_id=#{courseId}")
+    Course getCourseById(Integer id);
     /**
      * 添加课程
      * @param course
@@ -28,7 +36,7 @@ public interface CourseMapper {
     void addCourse(Course course);
 
     /**
-     * 获得所有课程
+     * 获得所有未被删除的课程
      * @return
      */
     @Select("select * from course where deleted=0")
@@ -46,9 +54,28 @@ public interface CourseMapper {
      * @param id
      */
     @Update("update course set deleted =1 where course_id=#{courseId}   ")
-    void deleteCourseById(Long id);
+    void deleteCourseById(Integer id);
+
+    /**
+     *通过courseId查询未被删除的class
+     * @param courseId
+     * @return
+     */
+    List<Class> queryClassById(Integer courseId);
 
 
+    /**
+     * 通过userId查询未被删除的course
+     * @param userId
+     * @return
+     */
+    List<Course> queryCoursesByUserId(Long  userId);
 
+    /**
+     * 通过userIds查询未被删除的courses
+     * @param userIds
+     * @return
+     */
 
+    List<Course> queryCoursesByUserIds(List<Integer> userIds);
 }
