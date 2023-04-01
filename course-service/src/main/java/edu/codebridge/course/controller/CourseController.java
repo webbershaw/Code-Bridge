@@ -4,9 +4,7 @@ import edu.codebridge.course.service.CourseService;
 import edu.codebridge.feign.code.ErrorCode;
 import edu.codebridge.feign.entity.Course;
 import edu.codebridge.feign.entity.Result;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,6 +21,16 @@ public class CourseController {
             return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
         }
 
+    }
+    @PutMapping
+    public Result upadte(Course course,HttpServletRequest request){
+
+        return courseService.updateCourse(course,request);
+    }
+
+    @GetMapping()
+    public Result getAllCourse(HttpServletRequest request){
+        return courseService.getAllCourse(request);
     }
 
 }

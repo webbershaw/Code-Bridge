@@ -23,6 +23,7 @@ public class UserController {
 
 
 
+
     @GetMapping("/pr/{id}")
     public User queryById(@PathVariable Long id){
         User user = userService.queryUserById(id);

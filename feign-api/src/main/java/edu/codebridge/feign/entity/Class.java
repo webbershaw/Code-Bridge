@@ -12,5 +12,6 @@ public class Class {
     private User user;
     private String className;
     private Short  deleted;
+    private Course course;
 
 }

@@ -5,6 +5,8 @@ import lombok.Data;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
+
 @Data
 public class Course {
 
@@ -17,12 +19,7 @@ public class Course {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private Short deleted;
+    private List<Class> classes;
 
-    public Integer getCourseId() {
-        return courseId;
-    }
 
-    public void setCourseId(Integer courseId) {
-        this.courseId = courseId;
-    }
 }

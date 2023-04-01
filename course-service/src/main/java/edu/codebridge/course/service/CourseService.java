@@ -12,7 +12,7 @@ public interface CourseService {
      * 得到couser通过id
      * @return
      */
-    Course  getCourseById(Long id);
+    Result  getCourseById(Integer id,HttpServletRequest request);
 
     /**
      * 添加课程
@@ -24,17 +24,22 @@ public interface CourseService {
      * 得到所有课程
      * @return
      */
-    List<Course> getAllCourse();
+    Result getAllCourse(HttpServletRequest request);
 
     /**
      * 修改课程
      * @param course
      */
-    void updateCourse(Course course);
+    Result updateCourse(Course course,HttpServletRequest request);
 
     /**
      * 删除课程
      * @param id
      */
-    void deletedCourseById(Long id);
+    Result deletedCourseById(Integer id,HttpServletRequest request);
+
+
+
+
+    Result queryCoursesByUserId(Long id,HttpServletRequest request);
 }
