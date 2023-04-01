@@ -4,14 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.codebridge.user.mapper.UserMapper">
     <insert id="insertUser" keyColumn="id" keyProperty="id">
-        insert into user (username,pwd,tel,identity) values (#{username},#{pwd},#{tel},#{identity})
+        insert into user (id,username,pwd,tel,identity) values (#{id},#{username},#{pwd},#{tel},#{identity})
     </insert>
     <update id="updateByCondition">
         update cb_user.user
         <set>
-            <if test="id !=null and id !=0 ">
-                id = #{id},
-            </if>
             <if test="username != null and username != '' ">
                 username = #{username},
             </if>
@@ -49,7 +46,7 @@
                 name = #{name},
             </if>
         </set>
-        where deleted = 0;
+        where deleted = 0 and id = #{id};
     </update>
 
 

@@ -1,6 +1,7 @@
 package edu.codebridge.user.service.impl;
 
 import edu.codebridge.feign.code.ErrorCode;
+import edu.codebridge.feign.code.IdentityCode;
 import edu.codebridge.feign.entity.Result;
 import edu.codebridge.feign.entity.User;
 import edu.codebridge.user.mapper.UserMapper;
@@ -8,12 +9,14 @@ import edu.codebridge.user.service.UserService;
 import edu.codebridge.user.util.PrivateInfoRemoval;
 import edu.codebridge.user.util.PwdEncodingUtil;
 import edu.codebridge.user.util.SenderUtil;
+import edu.codebridge.user.util.SnowflakeIdGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -38,7 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User queryUserById(Integer id) {
+    public User queryUserById(Long id) {
         return userMapper.queryById(id);
     }
 
@@ -57,6 +60,7 @@ public class UserServiceImpl implements UserService {
         String regex = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";
         String tel = user.getTel();
         String password = user.getPwd();
+        user.setId(SnowflakeIdGenerator.nextId());
 
         if(userMapper.queryByCondition(user)!=null){//判断电话号码是否重复
             return new Result(ErrorCode.ERR,false,"该电话号码已经注册，换一个吧！");
@@ -271,4 +275,119 @@ public class UserServiceImpl implements UserService {
         }
         return new Result(ErrorCode.OK,true,"欧耶，该电话号码可以注册");
     }
+
+
+    /**
+     * 用于在绑定学校时查询所有可供选择的学校
+     * @return
+     */
+    @Override
+    public Result getSchools() {
+        return new Result(ErrorCode.OK,userMapper.queryAllSchools(),"查询成功");
+    }
+
+    @Override
+    public Result completeInfo(HttpServletRequest request,User user) {
+//        System.out.println(user);
+        HttpSession session = request.getSession();
+        Object user1 = session.getAttribute("user");
+        User user2 = null;
+        if(user1!=null){
+            user2 = (User) user1;
+        }else {
+            return  new Result(ErrorCode.ERR,null,"您的登录已过期");
+        }
+        user.setId(user2.getId());
+
+        //Reject illegal request which modified Identity attribute;
+        if(!user.getIdentity().equals( IdentityCode.STUDENT) &&!user.getIdentity().equals(IdentityCode.UNAUTHORIZED_TEACHER)){
+            return  new Result(ErrorCode.ERR,null,"身份选择不正确");
+        }else if(user.getSchoolId()==null||user.getName()==null||user.getPersonId()==null){
+            return new Result(ErrorCode.ERR,null,"请填写必填项");
+        }
+
+        //Check whether email is null
+        if(user.getEmail()!=null&&user.getEmail()!=""){
+            Object verifyCodeTimeObj = session.getAttribute("emailVerifyCodeTime");
+            Object email1 = session.getAttribute("email");
+            String email = (String) email1;
+
+            long verifyCodeTime =0;
+            if(verifyCodeTimeObj!=null){
+                verifyCodeTime=(long)verifyCodeTimeObj;
+            }
+            Object verifyCodeObj = session.getAttribute("emailVerifyCode");
+            int verifyCode =0;
+            if(verifyCodeObj!=null){
+                verifyCode=(int)verifyCodeObj;
+            }else if(!email.equals(user.getEmail())){
+                return new Result(ErrorCode.ERR,null,"不要偷天换月");
+            }else {
+                return new Result(ErrorCode.ERR,false,"请先完成邮箱验证");
+            }
+
+            long gapTime=(System.currentTimeMillis()-verifyCodeTime)/1000;
+            if(verifyCode==0){
+                return new Result(ErrorCode.ERR,false,"邮箱验证失败");
+            } else if (user.getVerifyCode()!=verifyCode) {
+                return new Result(ErrorCode.ERR,false,"邮箱验证码错误");
+            } else if (gapTime>600) {
+                System.out.println(gapTime);
+                return new Result(ErrorCode.ERR,false,"验证码已过期，请重试");
+            }
+        }
+        userMapper.updateByCondition(user);
+        User login = userMapper.queryById(user.getId());
+
+        session.setAttribute("user",login);
+        PrivateInfoRemoval.removeAllPrivateInfo(login);
+
+
+        return new Result(ErrorCode.OK,login,"绑定成功");
+    }
+    @Override
+    public  Result sendEmailVerifyCode(HttpServletRequest request,String to){
+        try {
+            HttpSession session = request.getSession();
+            if(session.getAttribute("emailVerifyCode")!=null){
+                Object verifyCodeTimeObj = session.getAttribute("emailVerifyCodeTime");
+                long verifyCodeTime =0;
+                if(verifyCodeTimeObj!=null){
+                    verifyCodeTime = (long)verifyCodeTimeObj;
+                }else {
+                    return new Result(ErrorCode.ERR,null,"上次发送时间未记录，请联系管理员");
+                }
+                long gapTime=(System.currentTimeMillis()-verifyCodeTime)/1000;
+                if(gapTime<60){
+                    return new Result(ErrorCode.ERR,null,"邮箱验证码已发送,请耐心等待，或在"+(60-gapTime)+"秒后重试");
+                }
+            }
+            /**/
+            int code = (int) (Math.random()*1000000+1);
+            String  text = "您好感谢您注册Code Bridge，您的注册验证码是：\n\t" + code
+                    + "\n请您务必保管好您的验证码，如有问题，您可以直接回复此邮件，我们将竭诚为您服务。" +
+                    "\n若您对注册行为并不知情，请忽略该邮件";
+            String subject = "[Code Bridge 码桥]欢迎使用，您的注册验证码";
+            if(!senderUtil.sendEmail(to, subject, text)){
+                return new Result(ErrorCode.ERR,null,"发送失败");
+            }
+            int verifyCode = code;
+            /**/
+            if(verifyCode!=0) {
+                session.setAttribute("email", to);
+                session.setAttribute("emailVerifyCode", verifyCode);
+            }else {
+                return new Result(ErrorCode.ERR,null,"发送失败，请联系管理员");
+            }
+            session.setAttribute("emailVerifyCodeTime",System.currentTimeMillis());
+
+
+            return new Result(ErrorCode.OK,null,"发送成功，请注意查收，10分钟内有效");
+        }catch (Exception e){
+            System.out.println(e);
+            return new Result(ErrorCode.ERR,null,"发送失败，请联系管理员");
+        }
+    }
+
+
 }

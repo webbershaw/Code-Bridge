@@ -32,6 +32,7 @@ public class SenderUtilImpl implements SenderUtil {
             javaMailSender.send(simpleMailMessage);
             return true;
         }catch (Exception e){
+
             System.out.println(e);
             return false;
         }

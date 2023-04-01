@@ -25,7 +25,7 @@ public interface UserService {
      */
     public List<User> getUsersByCondition(User user);
 
-   public User queryUserById(Integer id);
+   public User queryUserById(Long id);
 
 
 
@@ -43,6 +43,12 @@ public interface UserService {
 
     public Result sendVerifyCode(HttpServletRequest request,String tel,Integer type);
     public Result checkTel(String tel);
+
+    public Result getSchools();
+
+    public Result completeInfo(HttpServletRequest request,User user);
+
+    public  Result sendEmailVerifyCode(HttpServletRequest request,String to);
 
 
 

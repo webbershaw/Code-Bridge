@@ -24,7 +24,7 @@ public class UserController {
 
 
     @GetMapping("/pr/{id}")
-    public User queryById(@PathVariable Integer id){
+    public User queryById(@PathVariable Long id){
         User user = userService.queryUserById(id);
         return user;
     }
@@ -40,7 +40,7 @@ public class UserController {
     /*-----------------Division of ↓↓↓↓ public API ↓↓↓↓ and ↑↑↑↑ private API ↑↑↑↑------------------------*/
 
     @PostMapping("/")
-    public Result register(HttpServletRequest httpServletRequest, @PathVariable User user){
+    public Result register(HttpServletRequest httpServletRequest, @RequestBody User user){
         return userService.register(user,httpServletRequest);
     }
 
@@ -90,6 +90,52 @@ public class UserController {
         return userService.checkTel(tel);
     }
 
+    @GetMapping("/school")
+    public  Result getAllSchools(){
+        try {
+            return userService.getSchools();
+        } catch (Exception e) {
+            System.out.println(e);
+            return new Result(ErrorCode.ERR,null,"获取学校失败");
+        }
+    }
+
+    @GetMapping("/get")
+    public Result getLogin(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+
+        if(user!=null){
+            user.setPwd(null);
+            return new Result(ErrorCode.OK,user);
+        }
+        return new Result(ErrorCode.ERR,false,"您未登录");
+    }
+    @GetMapping("/sendEmail/{to}")
+    public Result sendRegEmail(HttpServletRequest request,@PathVariable String to){
+        try {
+            return userService.sendEmailVerifyCode(request,to);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new Result(ErrorCode.ERR,null,"发送失败，请联系管理员");
+        }
+    }
+
+    @PutMapping ("/completeInfo")
+    public  Result completeInfo(HttpServletRequest request,@RequestBody User user){
+        try {
+            return  userService.completeInfo(request, user);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new Result(ErrorCode.ERR,null,"保存失败，请联系管理员");
+        }
+
+    }
+    @DeleteMapping("/logout")
+    public Result logout(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        return new Result(ErrorCode.OK,null);
+    }
 
 
 

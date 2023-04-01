@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface UserMapper {
     @Select("select * from cb_user.user where id =#{id}")
-    public User queryById(Integer id);
+    public User queryById(Long id);
 
 
     @Select("select * from cb_user.user where tel = #{tel} and deleted = 0")
@@ -32,9 +32,12 @@ public interface UserMapper {
     public School insertSchool(School school);
 
 
-    public User insertUser(User user);
+    public boolean insertUser(User user);
 
     public List<User> queryUsersByIds(List<Long> ids);
+
+    @Select("select * from school where school_id != 0")
+    public List<School> queryAllSchools();
 
 
 
