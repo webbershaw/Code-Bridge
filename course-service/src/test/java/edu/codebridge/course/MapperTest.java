@@ -94,9 +94,10 @@ public class MapperTest {
 //        modelMapper.addModel(model);
 
 
-        Class classByIdAndNoDeleted = classMapper.getClassByIdAndNoDeleted(1);
-        System.out.println(classByIdAndNoDeleted);
-
+//        Class classByIdAndNoDeleted = classMapper.getClassByIdAndNoDeleted(1);
+//        System.out.println(classByIdAndNoDeleted);
+        List<Class> classes = classMapper.queryClassByUserId(1);
+        System.out.println(classes);
     }
 
 }

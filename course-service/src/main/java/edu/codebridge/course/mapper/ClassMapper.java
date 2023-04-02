@@ -64,7 +64,7 @@ public interface ClassMapper {
      * @return
      */
 //    ------------------------------------------要不要把course放入
-    @Select("select * from class where user_id=#{userId} and deleted=0")
+
     List<Class> queryClassByUserId(Integer userId);
 
     /**

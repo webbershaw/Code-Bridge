@@ -92,6 +92,11 @@
         select  * from  class left join  course on class.course_id=course.course_id where class.deleted=0
         and class_id=#{classId}
     </select>
+    <select id="queryClassByUserId" resultMap="classMap">
+        select *
+        from class left join  course on class.course_id=course.course_id where class.deleted=0
+                                                                           and user_id=#{userId};
+    </select>
 
 
     <!--        //couserIds-->

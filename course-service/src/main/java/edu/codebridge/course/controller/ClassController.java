@@ -80,7 +80,7 @@ public class ClassController {
 //        }
 //
 //    }
-    @GetMapping("{classId}")
+    @GetMapping("/{classId}")
     public  Result queryClassByClassId(@PathVariable Integer classId,HttpServletRequest request){
 
         try {

@@ -115,13 +115,16 @@ public class ClassServiceImpl implements ClassService {
             return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
         User user =(User) user1;
-        if(user.getIdentity()!= IdentityCode.TEACHER){
-            return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
-        }
+
         Class clazz = classMapper.getClassByIdAndNoDeleted(classId);
         User user2 = userClient.queryById(clazz.getUserId());
         clazz.setUser(user2);
         clazz.getCourse().setUser(userClient.queryById(clazz.getCourse().getUserId()));
+
+
+        if(user.getId()!= clazz.getUserId()&&user.getId()!=clazz.getCourse().getUserId()&&relationshipClient.queryUserIdByClassId(clazz.getClassId()).contains(user.getId())){
+            return new Result(ErrorCode.PERMISSION_DENIED,null,"您的无权查看" );
+        }
         return new Result(ErrorCode.OK,clazz,"查询成功！");
 
     }
