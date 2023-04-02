@@ -51,16 +51,8 @@ public class ClassServiceImpl implements ClassService {
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
         }
-
-        //得到course_id
-       Integer courseId=null;
-        clazz.setCourseId(courseId);
-
-        //得到user_id
-
-        Long id = user.getId();
-        clazz.setUserId(id);
-        return new Result(ErrorCode.OK,clazz,"新增班级成功！");
+        classMapper.addClass(clazz);
+        return new Result(ErrorCode.OK,null,"新增班级成功！");
     }
 
     /**
