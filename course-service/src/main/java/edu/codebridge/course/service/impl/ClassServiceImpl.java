@@ -108,6 +108,23 @@ public class ClassServiceImpl implements ClassService {
         return new Result(ErrorCode.OK,userIds,"查询成功！");
     }
 
+    @Override
+    public Result queryClassByClassId(Integer classId, HttpServletRequest request) {
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        }
+        User user =(User) user1;
+        if(user.getIdentity()!= IdentityCode.TEACHER){
+            return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
+        }
+        Class clazz = classMapper.getClassByIdAndNoDeleted(classId);
+        User user2 = userClient.queryById(clazz.getUserId());
+        clazz.setUser(user2);
+        clazz.getCourse().setUser(userClient.queryById(clazz.getCourse().getUserId()));
+        return new Result(ErrorCode.OK,clazz,"查询成功！");
+
+    }
 
 
     public Result queryStudentClassesByUserId(HttpServletRequest request,Integer type){

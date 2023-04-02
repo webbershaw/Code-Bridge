@@ -8,10 +8,7 @@ import edu.codebridge.feign.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -44,7 +41,7 @@ public class ClassController {
      * @param request
      * @return
      */
-    @PostMapping("/zz")
+    @PutMapping
     public Result updateClass(Class clazz,HttpServletRequest request){
         try {
             return classService.updateClassById(clazz,request);
@@ -75,14 +72,26 @@ public class ClassController {
      * @param request
      * @return
      */
-    public Result queryUserIdsByClassIds(List<Integer> classIds,HttpServletRequest request){
+//    public Result queryUserIdsByClassIds(List<Integer> classIds,HttpServletRequest request){
+//        try {
+//            return classService.queryUserIdsByClassIds(classIds,request);
+//        } catch (Exception e) {
+//            return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
+//        }
+//
+//    }
+    @GetMapping("{classId}")
+    public  Result queryClassByClassId(@PathVariable Integer classId,HttpServletRequest request){
+
         try {
-            return classService.queryUserIdsByClassIds(classIds,request);
+            return classService.queryClassByClassId(classId,request);
         } catch (Exception e) {
             return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
         }
 
     }
+
+
 
 
 

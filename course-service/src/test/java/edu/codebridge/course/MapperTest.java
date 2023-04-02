@@ -87,11 +87,16 @@ public class MapperTest {
 //        System.out.println(courses.toString());
 
 //        courseMapper.updateCourseById(course);
-        Model model = new Model();
-        model.setIsPublic((short)1);
-        model.setUserId(1l);
+//        Model model = new Model();
+//        model.setIsPublic((short)1);
+//        model.setUserId(1l);
+//
+//        modelMapper.addModel(model);
 
-        modelMapper.addModel(model);
+
+        Class classByIdAndNoDeleted = classMapper.getClassByIdAndNoDeleted(1);
+        System.out.println(classByIdAndNoDeleted);
+
     }
 
 }

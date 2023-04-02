@@ -12,7 +12,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://home.codebridge.cn:3306/cb_relationship
+    url: jdbc:mysql://home.codebridge.cn:3306/cb_course
     username: root
     password: Yy336699
     type: com.alibaba.druid.pool.DruidDataSource

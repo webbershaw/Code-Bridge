@@ -19,7 +19,7 @@ public interface ClassMapper {
      * @param id
      * @return
      */
-    @Select("select * from class where class_id=#{classId} and deleted=0")
+
     Class getClassByIdAndNoDeleted(Integer id);
 
     /**

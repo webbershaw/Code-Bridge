@@ -41,5 +41,8 @@ public interface ClassService {
     Result queryUserIdsByClassIds(List<Integer> classIds,HttpServletRequest request);
 
 
+    Result queryClassByClassId(Integer classId,HttpServletRequest request);
+
+
 
 }
