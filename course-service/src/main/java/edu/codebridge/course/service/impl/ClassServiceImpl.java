@@ -129,26 +129,60 @@ public class ClassServiceImpl implements ClassService {
 
     }
 
-
-    public Result queryStudentClassesByUserId(HttpServletRequest request,Integer type){
+    @Override
+    public Result queryClassesByUserId(Long userId, HttpServletRequest request) {
         Object user1 = request.getSession().getAttribute("user");
         if(user1==null){
             return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
         User user =(User) user1;
-        List<Integer> courseId=null;
-        List<Class> classes = classMapper.queryClassByUserId(user.getId().intValue());
-        for (Class aClass : classes) {
-            if(aClass.getCourse().getEndTime().isBefore(LocalDateTime.now())){
 
-            }
+        List<Class> classes = classMapper.queryClassByUserId(userId);
+        classes.stream().forEach(item->item.setUser(userClient.queryById(item.getUserId())));
+        //此方法要对老师
+        if(user.getIdentity()!= IdentityCode.TEACHER){
+            return new Result(ErrorCode.PERMISSION_DENIED,null,"您的无权查看" );
         }
-        classes.stream()
-                .peek(clazz -> clazz.setUser(userClient.queryById(clazz.getUserId())))
-                .collect(Collectors.toList());
-        return new Result(ErrorCode.OK,classes,"");
+        return new Result(ErrorCode.OK,classes,"查询成功！");
+    }
+
+    @Override
+    public Result queryClassesByStudentUserId(HttpServletRequest request) {
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        }
+        User user =(User) user1;
+
+        List<Integer> classIds= relationshipClient.queryClassIdByUserId(user.getId());
+        List<Class> classes = classMapper.queryClassByClassIds(classIds);
+        classes.stream().forEach(item->item.setUser(userClient.queryById(item.getUserId())));
+
+        return new Result(ErrorCode.OK,classes,"查询成功！");
 
     }
+
+
+
+//    public Result queryClassesByUserId(HttpServletRequest request){
+//        Object user1 = request.getSession().getAttribute("user");
+//        if(user1==null){
+//            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+//        }
+//        User user =(User) user1;
+//        List<Integer> courseId=null;
+//        List<Class> classes = classMapper.queryClassByUserId(user.getId().intValue());
+//        for (Class aClass : classes) {
+//            if(aClass.getCourse().getEndTime().isBefore(LocalDateTime.now())){
+//
+//            }
+//        }
+//        classes.stream()
+//                .peek(clazz -> clazz.setUser(userClient.queryById(clazz.getUserId())))
+//                .collect(Collectors.toList());
+//        return new Result(ErrorCode.OK,classes,"");
+
+//    }
         public Result queryClassesByIds(List<Integer> classIds,HttpServletRequest request){
             List<Class> classes = classMapper.queryClassByIds(classIds);
 //            for (int i = 0; i < ; i++) {

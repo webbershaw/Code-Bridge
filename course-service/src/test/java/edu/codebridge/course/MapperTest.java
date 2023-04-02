@@ -6,10 +6,12 @@ import edu.codebridge.course.mapper.CourseMapper;
 import edu.codebridge.course.mapper.ModelMapper;
 import edu.codebridge.course.service.ClassService;
 import edu.codebridge.course.service.ModelService;
+import edu.codebridge.feign.client.RelationshipClient;
 import edu.codebridge.feign.client.UserClient;
 import edu.codebridge.feign.entity.Class;
 import edu.codebridge.feign.entity.Course;
 import edu.codebridge.feign.entity.Model;
+import edu.codebridge.feign.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ import java.util.stream.Collectors;
 public class MapperTest {
     @Autowired
     private ClassService classService;
+    @Autowired
+    private RelationshipClient relationshipClient;
     @Autowired
     private ClassMapper classMapper;
     @Autowired
@@ -96,8 +100,17 @@ public class MapperTest {
 
 //        Class classByIdAndNoDeleted = classMapper.getClassByIdAndNoDeleted(1);
 //        System.out.println(classByIdAndNoDeleted);
-        List<Class> classes = classMapper.queryClassByUserId(1);
-        System.out.println(classes);
+        List<Integer> classIds= relationshipClient.queryClassIdByUserId(1l);
+        System.out.println(classIds);
+//        ArrayList<Integer> objects = new ArrayList<>();
+//        objects.add(1);
+//        objects.add(2);
+//        User user = userClient.queryById(939l);
+//        System.out.println(user);
+//        List<Class> classes = classMapper.queryClassByClassIds(objects);
+//        System.out.println(classes);
+//        classes.stream().forEach(item->item.setUser(userClient.queryById(item.getUserId())));
+//        System.out.println(classes);
     }
 
 }

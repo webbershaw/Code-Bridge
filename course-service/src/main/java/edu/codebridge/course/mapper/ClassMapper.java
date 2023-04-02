@@ -65,7 +65,7 @@ public interface ClassMapper {
      */
 //    ------------------------------------------要不要把course放入
 
-    List<Class> queryClassByUserId(Integer userId);
+    List<Class> queryClassByUserId(Long userId);
 
     /**
      * 查出classes通过classId
@@ -88,6 +88,8 @@ public interface ClassMapper {
      * @return
      */
     List<Long> queryUerIdsByClassIds(List<Integer> classIds);
+
+    List<Class> queryClassByClassIds(List<Integer> classIds);
 
 
 

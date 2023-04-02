@@ -43,6 +43,8 @@ public interface ClassService {
 
     Result queryClassByClassId(Integer classId,HttpServletRequest request);
 
+    Result queryClassesByUserId(Long userId,HttpServletRequest request);
 
+    Result queryClassesByStudentUserId(HttpServletRequest request);
 
 }

@@ -86,8 +86,18 @@ public class ClassController {
         try {
             return classService.queryClassByClassId(classId,request);
         } catch (Exception e) {
+            System.out.println(e);
             return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
         }
+
+    }
+    public Result queryClassByUserId(Long userId,HttpServletRequest request){
+        try {
+            return classService.queryClassesByUserId(userId,request);
+        } catch (Exception e) {
+            return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
+        }
+
 
     }
 
