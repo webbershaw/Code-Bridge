@@ -98,6 +98,7 @@ public class ClassController {
         try {
             return classService.queryClassesByUserId(request);
         } catch (Exception e) {
+            e.printStackTrace();
             return new Result(ErrorCode.ERR,null,"失败，请联系管理员");
         }
     }

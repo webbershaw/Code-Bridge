@@ -1,5 +1,6 @@
 package edu.codebridge.feign.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.math.BigInteger;
@@ -16,10 +17,14 @@ public class Course {
     private Long userId;
     private  Integer modelId;
     private User user;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime startTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime endTime;
     private Short deleted;
     private List<Class> classes;
+
+    private String imagePath;
 
 
 }

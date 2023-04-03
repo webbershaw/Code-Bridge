@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -179,7 +180,9 @@ public class ClassServiceImpl implements ClassService {
         }
         //通过老师的id查带的班
         List<Class> classes = classMapper.queryClassByUserId(user.getId());
-        classes.stream().forEach(item->item.setUser(userClient.queryById(item.getUserId())));
+        classes.stream()
+                .forEach(c -> c.setUser(userClient.queryUsersByIds(Collections.singletonList(c.getUserId())).stream().findFirst().orElse(null)));
+
 
         return new Result(ErrorCode.OK,classes,"查询成功！");
     }
@@ -199,7 +202,9 @@ public class ClassServiceImpl implements ClassService {
 
         List<Integer> classIds= relationshipClient.queryClassIdByUserId(user.getId());
         List<Class> classes = classMapper.queryClassByClassIds(classIds);
-        classes.stream().forEach(item->item.setUser(userClient.queryById(item.getUserId())));
+        classes.stream()
+                .forEach(c -> c.setUser(userClient.queryUsersByIds(Collections.singletonList(c.getUserId())).stream().findFirst().orElse(null)));
+
 
         return new Result(ErrorCode.OK,classes,"查询成功！");
 

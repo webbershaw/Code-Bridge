@@ -19,6 +19,7 @@
             <result property="startTime" column="start_time"/>
             <result property="modelId" column="model_id"/>
             <result property="deleted" column="deleted"/>
+            <result property="imagePath" column="imagePath"/>
         </association>
         <!--      <collection property="course" select="queryCourseById" ofType="edu.codebridge.feign.entity.Course"></collection>-->
 

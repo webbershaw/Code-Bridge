@@ -1,5 +1,6 @@
 package edu.codebridge.feign.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -16,7 +17,9 @@ public class User implements Serializable {
     private Short deleted;
     private String avatarUrl;
     private Short identity;
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime createTime;
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime updateTime;
     private String  intro;
     private Short certified;
