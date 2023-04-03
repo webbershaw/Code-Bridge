@@ -14,5 +14,5 @@ public interface ModelService {
 
     Result queryModelByKeyWord(String name,HttpServletRequest request);
 
-    Result queryModelByUserId(Long userId,HttpServletRequest request);
+    Result queryModelByUserId(HttpServletRequest request);
 }

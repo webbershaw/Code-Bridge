@@ -90,7 +90,7 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
-    public Result queryModelByUserId(Long userId,HttpServletRequest request) {
+    public Result queryModelByUserId(HttpServletRequest request) {
         if (Check.checkUser(request).getData()==null){
             return Check.checkUser(request);
         }
@@ -99,7 +99,7 @@ public class ModelServiceImpl implements ModelService {
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
         }
-        List<Model> models = modelMapper.queryModelByUserId(userId);
+        List<Model> models = modelMapper.queryModelByUserId(user.getId());
 
         models.stream().forEach(item->item.setUser(userClient.queryById(item.getUserId())));
             return new Result(ErrorCode.OK,models,"查询成功！");

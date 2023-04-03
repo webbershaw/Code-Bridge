@@ -107,7 +107,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Result queryCoursesByUserId(Long id, HttpServletRequest request) {
+    public Result queryCoursesByUserId(HttpServletRequest request) {
         if (Check.checkUser(request).getData()==null){
             return Check.checkUser(request);
         }
@@ -115,7 +115,7 @@ public class CourseServiceImpl implements CourseService {
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
         }
-        List<Course> courses = courseMapper.queryCoursesByUserId(id);
+        List<Course> courses = courseMapper.queryCoursesByUserId(user.getId());
 
         return new Result(ErrorCode.OK,courses,"查询成功！");
     }

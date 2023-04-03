@@ -57,7 +57,7 @@ public class ModelController {
     }
     public Result queryModelsByUserId(Long userId,HttpServletRequest request){
         try {
-            return  modelService.queryModelByUserId(userId,request);
+            return  modelService.queryModelByUserId(request);
         } catch (Exception e) {
             return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
         }

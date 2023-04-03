@@ -41,5 +41,5 @@ public interface CourseService {
 
 
 
-    Result queryCoursesByUserId(Long id,HttpServletRequest request);
+    Result queryCoursesByUserId(HttpServletRequest request);
 }

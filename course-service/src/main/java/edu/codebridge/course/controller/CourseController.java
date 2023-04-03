@@ -60,9 +60,9 @@ public class CourseController {
 
 
 
-    public Result  queryCoursesByUserId(HttpServletRequest request,Long userId){
+    public Result  queryCoursesByUserId(HttpServletRequest request){
         try {
-            return courseService.queryCoursesByUserId(userId,request);
+            return courseService.queryCoursesByUserId(request);
         } catch (Exception e) {
             e.printStackTrace();
             return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
