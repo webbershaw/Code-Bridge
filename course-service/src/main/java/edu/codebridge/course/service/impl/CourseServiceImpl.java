@@ -26,17 +26,24 @@ public class CourseServiceImpl implements CourseService {
     private CourseMapper courseMapper;
     @Autowired
     private UserClient userClient;
+
+    /**通过课程id
+     * 查询课程
+     *
+     * @param id
+     * @param request
+     * @return
+     */
     @Override
     public Result getCourseById(Integer id,HttpServletRequest request) {
+        //登录校验
         if (Check.checkUser(request).getData()==null){
             return Check.checkUser(request);
         }
         User user =(User)Check.checkUser(request).getData();
 
-        if(user.getIdentity()!= IdentityCode.TEACHER){
-            return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
-        }
 
+        //查询课程
         Course course = courseMapper.getCourseById(id);
 
         return  new Result(ErrorCode.OK,course,"查询成功！");

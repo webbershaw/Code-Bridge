@@ -180,10 +180,11 @@ public class ClassServiceImpl implements ClassService {
         }
         //通过老师的id查带的班
         List<Class> classes = classMapper.queryClassByUserId(user.getId());
+        if(classes.isEmpty()){
+            return new Result(ErrorCode.OK,new ArrayList<>(),"您没有任何分班");
+        }
         classes.stream()
                 .forEach(c -> c.setUser(userClient.queryUsersByIds(Collections.singletonList(c.getUserId())).stream().findFirst().orElse(null)));
-
-
         return new Result(ErrorCode.OK,classes,"查询成功！");
     }
 
@@ -200,7 +201,11 @@ public class ClassServiceImpl implements ClassService {
         }
         User user =(User)Check.checkUser(request).getData();
 
+        //查询
         List<Integer> classIds= relationshipClient.queryClassIdByUserId(user.getId());
+        if(classIds.isEmpty()){
+            return new Result(ErrorCode.OK,new ArrayList<>(),"您没有任何课程");
+        }
         List<Class> classes = classMapper.queryClassByClassIds(classIds);
         classes.stream()
                 .forEach(c -> c.setUser(userClient.queryUsersByIds(Collections.singletonList(c.getUserId())).stream().findFirst().orElse(null)));
@@ -209,28 +214,5 @@ public class ClassServiceImpl implements ClassService {
         return new Result(ErrorCode.OK,classes,"查询成功！");
 
     }
-
-
-
-//    public Result queryClassesByUserId(HttpServletRequest request){
-//        Object user1 = request.getSession().getAttribute("user");
-//        if(user1==null){
-//            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
-//        }
-//        User user =(User) user1;
-//        List<Integer> courseId=null;
-//        List<Class> classes = classMapper.queryClassByUserId(user.getId().intValue());
-//        for (Class aClass : classes) {
-//            if(aClass.getCourse().getEndTime().isBefore(LocalDateTime.now())){
-//
-//            }
-//        }
-//        classes.stream()
-//                .peek(clazz -> clazz.setUser(userClient.queryById(clazz.getUserId())))
-//                .collect(Collectors.toList());
-//        return new Result(ErrorCode.OK,classes,"");
-
-//    }
-
 
 }
