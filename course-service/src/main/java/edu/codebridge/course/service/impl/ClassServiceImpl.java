@@ -50,7 +50,7 @@ public class ClassServiceImpl implements ClassService {
         }
         User user =(User)Check.checkUser(request).getData();
 
-        if(user.getIdentity()!= IdentityCode.TEACHER){
+        if(!user.getIdentity().equals(IdentityCode.TEACHER)){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
         }
         classMapper.addClass(clazz);
@@ -69,7 +69,7 @@ public class ClassServiceImpl implements ClassService {
             return Check.checkUser(request);
         }
         User user =(User)Check.checkUser(request).getData();
-        if(user.getIdentity()!= IdentityCode.TEACHER){
+        if(!user.getIdentity().equals(IdentityCode.TEACHER)){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
         }
         Long id = user.getId();
@@ -90,24 +90,30 @@ public class ClassServiceImpl implements ClassService {
      */
     @Override
     public Result queryUserIdByClassId(Integer classId, HttpServletRequest request) {
-
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
+        }
+        User user =(User)Check.checkUser(request).getData();
         Long userId = classMapper.queryUserIdByClassId(classId);
         return new  Result(ErrorCode.OK,userId,"查询成功！");
     }
 
     @Override
     public Result queryUserIdsByClassIds(List<Integer> classIds, HttpServletRequest request) {
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
+        }
+        User user =(User)Check.checkUser(request).getData();
         List<Long> userIds = classMapper.queryUerIdsByClassIds(classIds);
         return new Result(ErrorCode.OK,userIds,"查询成功！");
     }
 
     @Override
     public Result queryClassByClassId(Integer classId, HttpServletRequest request) {
-        Object user1 = request.getSession().getAttribute("user");
-        if(user1==null){
-            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
         }
-        User user =(User) user1;
+        User user =(User)Check.checkUser(request).getData();
 
         Class clazz = classMapper.getClassByIdAndNoDeleted(classId);
         User user2 = userClient.queryById(clazz.getUserId());
@@ -131,11 +137,10 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public Result queryClassesByUserId(HttpServletRequest request) {
-        Object user1 = request.getSession().getAttribute("user");
-        if(user1==null){
-            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
         }
-        User user =(User) user1;
+        User user =(User)Check.checkUser(request).getData();
         System.out.println(user);
         List<Class> classes = classMapper.queryClassByUserId(user.getId());
         classes.stream().forEach(item->item.setUser(userClient.queryById(item.getUserId())));
