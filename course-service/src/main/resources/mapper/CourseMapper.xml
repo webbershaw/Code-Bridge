@@ -89,7 +89,7 @@
     </select>
     <select id="getCourseById" resultMap="courseMap">
         select *
-        from course left join class on course.course_id=class.course_id where course.course_id=#{courseId} and deleted=0;
+        from course left join class on course.course_id=class.course_id where course.course_id=#{courseId} and course.deleted=0;
     </select>
 
 

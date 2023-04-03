@@ -100,8 +100,8 @@ public class MapperTest {
 
 //        Class classByIdAndNoDeleted = classMapper.getClassByIdAndNoDeleted(1);
 //        System.out.println(classByIdAndNoDeleted);
-        List<Integer> classIds= relationshipClient.queryClassIdByUserId(1l);
-        System.out.println(classIds);
+//        List<Integer> classIds= relationshipClient.queryClassIdByUserId(1l);
+//        System.out.println(classIds);
 //        ArrayList<Integer> objects = new ArrayList<>();
 //        objects.add(1);
 //        objects.add(2);
@@ -111,6 +111,9 @@ public class MapperTest {
 //        System.out.println(classes);
 //        classes.stream().forEach(item->item.setUser(userClient.queryById(item.getUserId())));
 //        System.out.println(classes);
+
+
+        List<Course> courses = courseMapper.queryCoursesByUserId(1l);
     }
 
 }

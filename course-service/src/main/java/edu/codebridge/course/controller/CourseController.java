@@ -18,19 +18,63 @@ public class CourseController {
         try {
             return courseService.addCourse(course, request);
         } catch (Exception e) {
+            e.printStackTrace();
             return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
         }
 
     }
     @PutMapping
     public Result upadte(Course course,HttpServletRequest request){
+        try {
+             return courseService.updateCourse(course,request);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
+        }
 
-        return courseService.updateCourse(course,request);
     }
 
     @GetMapping()
-    public Result getAllCourse(HttpServletRequest request){
-        return courseService.getAllCourse(request);
+    public Result queryCourseByCourseId(Integer courseId,HttpServletRequest request){
+
+        try {
+            return courseService.getCourseById(courseId,request);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
+        }
+
     }
 
+
+@GetMapping("/zz")
+    public Result queryAll(HttpServletRequest request){
+
+        try {
+            return courseService.getAllCourse(request);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
+        }
+    }
+
+
+
+    public Result  queryCoursesByUserId(HttpServletRequest request,Long userId){
+        try {
+            return courseService.queryCoursesByUserId(userId,request);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
+        }
+    }
+
+    public Result deletedCourseById(HttpServletRequest request,Integer courseId){
+        try {
+            return courseService.deletedCourseById(courseId,request);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
+        }
+    }
 }

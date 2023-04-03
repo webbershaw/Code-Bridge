@@ -13,5 +13,6 @@ public class Class {
     private String className;
     private Short  deleted;
     private Course course;
+    private String topNotice;
 
 }
