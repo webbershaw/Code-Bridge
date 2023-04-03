@@ -9,4 +9,5 @@ public class IdentityCode {
     public static final Short TEACHER = 1;
     public static final Short ADMINISTRATOR = 2;
     public static final Short UNAUTHORIZED_TEACHER = 3;
+    public static final Short SCHOOL_ADMIN = 4;
 }

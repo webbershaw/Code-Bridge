@@ -37,6 +37,7 @@ spring:
     default-encoding: utf-8
   jackson:
     default-property-inclusion: non_null
+    date-format: yyyy-MM-dd HH:mm
   cloud:
     nacos:
       config:

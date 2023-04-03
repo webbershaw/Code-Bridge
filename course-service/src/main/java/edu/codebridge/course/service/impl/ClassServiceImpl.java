@@ -30,6 +30,7 @@ public class ClassServiceImpl implements ClassService {
     @Autowired
     private CourseMapper courseMapper;
 
+    @Autowired
     private RelationshipClient relationshipClient;
     @Autowired
     private ClassMapper classMapper;
@@ -111,10 +112,17 @@ public class ClassServiceImpl implements ClassService {
         Class clazz = classMapper.getClassByIdAndNoDeleted(classId);
         User user2 = userClient.queryById(clazz.getUserId());
         clazz.setUser(user2);
-        clazz.getCourse().setUser(userClient.queryById(clazz.getCourse().getUserId()));
+        user2.setPwd(null);
+        user2.setEmail(null);
+        user2.setTel(null);
+        User user3 = userClient.queryById(clazz.getCourse().getUserId());
+        user3.setPwd(null);
+        user3.setTel(null);
+        user3.setEmail(null);
+        clazz.getCourse().setUser(user3);
 
 
-        if(user.getId()!= clazz.getUserId()&&user.getId()!=clazz.getCourse().getUserId()&&relationshipClient.queryUserIdByClassId(clazz.getClassId()).contains(user.getId())){
+        if(user.getId()!= clazz.getUserId()&&user.getId()!=clazz.getCourse().getUserId()&&!relationshipClient.queryUserIdByClassId(clazz.getClassId()).contains(user.getId())){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的无权查看" );
         }
         return new Result(ErrorCode.OK,clazz,"查询成功！");
@@ -122,17 +130,17 @@ public class ClassServiceImpl implements ClassService {
     }
 
     @Override
-    public Result queryClassesByUserId(Long userId, HttpServletRequest request) {
+    public Result queryClassesByUserId(HttpServletRequest request) {
         Object user1 = request.getSession().getAttribute("user");
         if(user1==null){
             return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
         User user =(User) user1;
-
-        List<Class> classes = classMapper.queryClassByUserId(userId);
+        System.out.println(user);
+        List<Class> classes = classMapper.queryClassByUserId(user.getId());
         classes.stream().forEach(item->item.setUser(userClient.queryById(item.getUserId())));
         //此方法要对老师
-        if(user.getIdentity()!= IdentityCode.TEACHER){
+        if(!user.getIdentity().equals(IdentityCode.TEACHER)){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的无权查看" );
         }
         return new Result(ErrorCode.OK,classes,"查询成功！");

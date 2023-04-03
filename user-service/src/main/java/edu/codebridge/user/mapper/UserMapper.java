@@ -13,7 +13,7 @@ import java.util.List;
 @Mapper
 @Repository
 public interface UserMapper {
-    @Select("select * from cb_user.user where id =#{id}")
+    @Select("select id, username, email, deleted, avatar_url, identity, intro, certified, user.school_id, person_id, name, tel,school_name from cb_user.user,cb_user.school where id =#{id} and user.school_id=school.school_id")
     public User queryById(Long id);
 
 

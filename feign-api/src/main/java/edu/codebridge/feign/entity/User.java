@@ -2,12 +2,13 @@ package edu.codebridge.feign.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
-public class User {
+public class User implements Serializable {
     private Long id;
     private String username;
     private String  pwd;

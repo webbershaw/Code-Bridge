@@ -9,6 +9,7 @@
         <result column="class_name" property="className"/>
         <result column="course_id" property="courseId"/>
         <result column="class_name" property="className"/>
+        <result column="top_notice" property="topNotice"/>
         <association property="course" >
             <id property="courseId" column="course_id"/>
             <result property="courseIntro" column="course_intro"/>
@@ -89,7 +90,7 @@
         </foreach>
     </select>
     <select id="getClassByIdAndNoDeleted" resultMap="classMap">
-        select  * from  class left join  course on class.course_id=course.course_id where class.deleted=0
+        select * from  class left join  course on class.course_id=course.course_id where class.deleted=0
         and class_id=#{classId}
     </select>
     <select id="queryClassByUserId" resultMap="classMap">

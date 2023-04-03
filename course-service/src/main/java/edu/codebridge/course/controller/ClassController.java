@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("course/class")
+@RequestMapping("courses/class")
 public class ClassController {
     @Autowired
     private ClassService classService;
@@ -61,7 +61,7 @@ public class ClassController {
         try {
             return  classService.queryUserIdByClassId(classId,request);
         } catch (Exception e) {
-            return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
+            return new Result(ErrorCode.ERR,null,"失败，请联系管理员");
         }
 
     }
@@ -87,15 +87,18 @@ public class ClassController {
             return classService.queryClassByClassId(classId,request);
         } catch (Exception e) {
             System.out.println(e);
-            return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
+            e.printStackTrace();
+            return new Result(ErrorCode.ERR,null,"失败，请联系管理员");
         }
 
     }
-    public Result queryClassByUserId(Long userId,HttpServletRequest request){
+
+    @GetMapping("/teacher")
+    public Result queryClassByUserId(HttpServletRequest request){
         try {
-            return classService.queryClassesByUserId(userId,request);
+            return classService.queryClassesByUserId(request);
         } catch (Exception e) {
-            return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
+            return new Result(ErrorCode.ERR,null,"失败，请联系管理员");
         }
 
 

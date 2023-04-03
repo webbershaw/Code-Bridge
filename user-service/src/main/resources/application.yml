@@ -1,6 +1,9 @@
 
-
 spring:
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
   application:
     name: user-service
   #          namespace: 432f5be3-ff68-473f-86ef-e7d43c8e990f #命名空间
@@ -40,6 +43,7 @@ spring:
     default-encoding: utf-8
   jackson:
     default-property-inclusion: non_null
+    date-format: yyyy-MM-dd HH:mm
 mybatis:
   type-aliases-package: edu.codebridge.user.mapper
   mapper-locations: classpath*:mapper/*.xml
