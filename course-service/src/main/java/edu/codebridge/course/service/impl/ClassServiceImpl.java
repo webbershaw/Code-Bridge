@@ -197,8 +197,6 @@ public class ClassServiceImpl implements ClassService {
         }
         User user =(User)Check.checkUser(request).getData();
 
-
-
         List<Integer> classIds= relationshipClient.queryClassIdByUserId(user.getId());
         List<Class> classes = classMapper.queryClassByClassIds(classIds);
         classes.stream().forEach(item->item.setUser(userClient.queryById(item.getUserId())));
@@ -228,15 +226,6 @@ public class ClassServiceImpl implements ClassService {
 //        return new Result(ErrorCode.OK,classes,"");
 
 //    }
-        public Result queryClassesByIds(List<Integer> classIds,HttpServletRequest request){
-            List<Class> classes = classMapper.queryClassByIds(classIds);
-//            for (int i = 0; i < ; i++) {
-//
-//            }
-            return new  Result(ErrorCode.OK,classes,"查询成功！");
-        }
-
-
 
 
 }
