@@ -1,5 +1,6 @@
 package edu.codebridge.course.service.impl;
 
+import edu.codebridge.course.common.Check;
 import edu.codebridge.course.mapper.ClassMapper;
 import edu.codebridge.course.mapper.CourseMapper;
 import edu.codebridge.course.service.ClassService;
@@ -43,11 +44,11 @@ public class ClassServiceImpl implements ClassService {
      */
     @Override
     public Result addClass(Class clazz,HttpServletRequest request) {
-        Object user1 = request.getSession().getAttribute("user");
-        if(user1==null){
-            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        if (Check.checkUser(request).getData()==null){
+           return Check.checkUser(request);
         }
-        User user =(User) user1;
+        User user =(User)Check.checkUser(request).getData();
+
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
         }
@@ -63,11 +64,10 @@ public class ClassServiceImpl implements ClassService {
      */
     @Override
     public Result updateClassById(Class clazz, HttpServletRequest request) {
-        Object user1 = request.getSession().getAttribute("user");
-        if(user1==null){
-            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
         }
-        User user =(User) user1;
+        User user =(User)Check.checkUser(request).getData();
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
         }

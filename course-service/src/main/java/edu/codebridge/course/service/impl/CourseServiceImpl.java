@@ -28,11 +28,10 @@ public class CourseServiceImpl implements CourseService {
     private UserClient userClient;
     @Override
     public Result getCourseById(Integer id,HttpServletRequest request) {
-        Object user1 = request.getSession().getAttribute("user");
-        if(user1==null){
-            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
         }
-        User user =(User) user1;
+        User user =(User)Check.checkUser(request).getData();
 
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
@@ -45,11 +44,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Result addCourse(Course course, HttpServletRequest request) {
-        Object user1 = request.getSession().getAttribute("user");
-        if(user1==null){
-            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
         }
-        User user =(User) user1;
+        User user =(User)Check.checkUser(request).getData();
 
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
@@ -64,9 +62,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Result getAllCourse(HttpServletRequest request) {
-     if (Check.checkUser(request)!=null){
-        return Check.checkUser(request);
-     }
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
+        }
+        User user =(User)Check.checkUser(request).getData();
+
         List<Course> courses = courseMapper.getAllCourses();
         courses.stream()
                 .peek(course -> course.setUser(userClient.queryById(course.getUserId())))
@@ -76,11 +76,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Result updateCourse(Course course,HttpServletRequest request) {
-        Object user1 = request.getSession().getAttribute("user");
-        if(user1==null){
-            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
         }
-        User user =(User) user1;
+        User user =(User)Check.checkUser(request).getData();
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
         }
@@ -96,11 +95,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Result deletedCourseById(Integer id,HttpServletRequest request) {
-        Object user1 = request.getSession().getAttribute("user");
-        if(user1==null){
-            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
         }
-        User user =(User) user1;
+        User user =(User)Check.checkUser(request).getData();
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
         }
@@ -110,11 +108,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Result queryCoursesByUserId(Long id, HttpServletRequest request) {
-        Object user1 = request.getSession().getAttribute("user");
-        if(user1==null){
-            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
         }
-        User user =(User) user1;
+        User user =(User)Check.checkUser(request).getData();
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
         }

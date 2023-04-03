@@ -14,10 +14,11 @@ public   class Check {
             return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
         User user =(User) user1;
-        if(user.getIdentity()!= IdentityCode.TEACHER){
-            return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
-        }
-        return null;
+        return new Result(ErrorCode.OK,user,"用户登录了");
+//        if(user.getIdentity()!= IdentityCode.TEACHER){
+//            return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
+//        }
+
     }
 
 }

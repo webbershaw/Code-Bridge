@@ -1,5 +1,6 @@
 package edu.codebridge.course.service.impl;
 
+import edu.codebridge.course.common.Check;
 import edu.codebridge.course.mapper.ModelMapper;
 import edu.codebridge.course.service.ModelService;
 import edu.codebridge.feign.client.UserClient;
@@ -22,11 +23,10 @@ public class ModelServiceImpl implements ModelService {
     private UserClient userClient;
     @Override
     public Result addModel(Model model, HttpServletRequest request) {
-        Object user1 = request.getSession().getAttribute("user");
-        if(user1==null){
-            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
         }
-        User user =(User) user1;
+        User user =(User)Check.checkUser(request).getData();
 
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
@@ -40,11 +40,10 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public Result copyModelByModelId(Integer modelId,HttpServletRequest request) {
-        Object user1 = request.getSession().getAttribute("user");
-        if(user1==null){
-            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
         }
-        User user =(User) user1;
+        User user =(User)Check.checkUser(request).getData();
 
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
@@ -60,11 +59,10 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public Result queryAllModel(HttpServletRequest request) {
-        Object user1 = request.getSession().getAttribute("user");
-        if(user1==null){
-            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
         }
-        User user =(User) user1;
+        User user =(User)Check.checkUser(request).getData();
 
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
@@ -76,11 +74,10 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public Result queryModelByKeyWord(String name, HttpServletRequest request) {
-        Object user1 = request.getSession().getAttribute("user");
-        if(user1==null){
-            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
         }
-        User user =(User) user1;
+        User user =(User)Check.checkUser(request).getData();
 
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
@@ -94,11 +91,10 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public Result queryModelByUserId(Long userId,HttpServletRequest request) {
-        Object user1 = request.getSession().getAttribute("user");
-        if(user1==null){
-            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        if (Check.checkUser(request).getData()==null){
+            return Check.checkUser(request);
         }
-        User user =(User) user1;
+        User user =(User)Check.checkUser(request).getData();
 
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
