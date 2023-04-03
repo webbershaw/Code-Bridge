@@ -100,8 +100,15 @@ public class ClassController {
         } catch (Exception e) {
             return new Result(ErrorCode.ERR,null,"失败，请联系管理员");
         }
+    }
 
-
+    @GetMapping("/student")
+    public  Result queryClassesByStudentUserId(HttpServletRequest request){
+        try {
+            return classService.queryClassesByStudentUserId(request);
+        } catch (Exception e) {
+            return new Result(ErrorCode.ERR,null,"失败，请联系管理员");
+        }
     }
 
 
