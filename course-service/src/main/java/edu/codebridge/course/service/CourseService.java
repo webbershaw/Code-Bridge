@@ -39,7 +39,18 @@ public interface CourseService {
     Result deletedCourseById(Integer id,HttpServletRequest request);
 
 
-
-
+    /**
+     * 对老师开放
+     * @param request
+     * @return
+     */
     Result queryCoursesByUserId(HttpServletRequest request);
+
+
+    /**
+     * 对学生开放
+     * @param request
+     * @return
+     */
+    Result queryCoursesByStudentUserId(HttpServletRequest request);
 }
