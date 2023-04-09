@@ -14,10 +14,18 @@ spring:
     #        ephemeral: false #设置为永久实例
     gateway:
       routes:
+        - id: user-service-files
+          uri: lb://user-service
+          predicates:
+              - Path=/files/**
         - id: user-service
           uri: lb://user-service
           predicates:
             - Path=/users/**
+#            - Path=/files/**
+
+
+
 
         - id: task-service
           uri: lb://task-service

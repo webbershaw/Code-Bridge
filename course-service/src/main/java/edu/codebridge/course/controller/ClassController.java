@@ -86,7 +86,6 @@ public class ClassController {
         try {
             return classService.queryClassByClassId(classId,request);
         } catch (Exception e) {
-            System.out.println(e);
             e.printStackTrace();
             return new Result(ErrorCode.ERR,null,"失败，请联系管理员");
         }
@@ -108,6 +107,7 @@ public class ClassController {
         try {
             return classService.queryClassesByStudentUserId(request);
         } catch (Exception e) {
+            e.printStackTrace();
             return new Result(ErrorCode.ERR,null,"失败，请联系管理员");
         }
     }

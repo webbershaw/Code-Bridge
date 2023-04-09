@@ -31,5 +31,6 @@ public class User implements Serializable {
     private String schoolName;
 
     private Integer verifyCode;
+    private School school;
 
 }

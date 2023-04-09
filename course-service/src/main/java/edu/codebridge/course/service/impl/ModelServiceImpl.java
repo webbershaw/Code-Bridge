@@ -96,12 +96,12 @@ public class ModelServiceImpl implements ModelService {
         }
         User user =(User)Check.checkUser(request).getData();
 
-        if(user.getIdentity()!= IdentityCode.TEACHER){
+        if(!user.getIdentity().equals(IdentityCode.TEACHER)){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
         }
         List<Model> models = modelMapper.queryModelByUserId(user.getId());
 
-        models.stream().forEach(item->item.setUser(userClient.queryById(item.getUserId())));
+//        models.stream().forEach(item->item.setUser(userClient.queryById(item.getUserId())));
             return new Result(ErrorCode.OK,models,"查询成功！");
     }
 

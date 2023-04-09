@@ -77,13 +77,13 @@ server:
 #    key-store-type: JKS
 
 
-#azureblob:
-#  defaultEndpointsProtocol: https
-#  blobEndpoint: https://webbershaw.blob.core.windows.net/
-#  queueEndpoint: https://webbershaw.queue.core.windows.net/
-#  tableEndpoint: https://webbershaw.table.core.windows.net/
-#  accountName: webbershaw
-#  accountKey: +hCiGjG/ApY0j8mKrBmCKuyC5BIkoRPeEcv+EA0q+LIWo4oyay+H7JuI4SqpoCQq9G1hyQrGLb31+ASt4IGmDQ==
+azureblob:
+  defaultEndpointsProtocol: https
+  blobEndpoint: https://emue7eheidyf4vpnsa.blob.core.windows.net
+  queueEndpoint: https://emue7eheidyf4vpnsa.square.core.windows.net
+  tableEndpoint: https://emue7eheidyf4vpnsa.table.core.windows.net
+  accountName: emue7eheidyf4vpnsa
+  accountKey: ei06tW+9/NrXjGa38hXbIj7LbwnlfArksMfwtejW/MYtSqAWXyh0garzwtzMKAoYvoqIBV4K4TXk+AStYCGl1Q==
 #
 
 

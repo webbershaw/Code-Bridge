@@ -1,7 +1,10 @@
 package edu.codebridge.course.service.impl;
 
 import edu.codebridge.course.common.Check;
+import edu.codebridge.course.common.CourseNumberGenerator;
+import edu.codebridge.course.mapper.ClassMapper;
 import edu.codebridge.course.mapper.CourseMapper;
+import edu.codebridge.course.service.ClassService;
 import edu.codebridge.course.service.CourseService;
 import edu.codebridge.feign.client.UserClient;
 import edu.codebridge.feign.code.ErrorCode;
@@ -9,6 +12,7 @@ import edu.codebridge.feign.code.IdentityCode;
 import edu.codebridge.feign.entity.Course;
 import edu.codebridge.feign.entity.Result;
 import edu.codebridge.feign.entity.User;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -26,6 +30,8 @@ public class CourseServiceImpl implements CourseService {
     private CourseMapper courseMapper;
     @Autowired
     private UserClient userClient;
+    @Autowired
+    private ClassMapper classMapper;
 
     /**通过课程id
      * 查询课程
@@ -56,15 +62,25 @@ public class CourseServiceImpl implements CourseService {
         }
         User user =(User)Check.checkUser(request).getData();
 
-        if(user.getIdentity()!= IdentityCode.TEACHER){
+
+
+
+        if(!user.getIdentity().equals( IdentityCode.TEACHER)){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
         }
 
         course.setUserId(user.getId());
-
+        Integer courseId = CourseNumberGenerator.generateCourseNumber();
+        course.setCourseId(courseId);
         courseMapper.addCourse(course);
 
-        return new Result(ErrorCode.OK,null,"添加成功");
+        System.out.println(courseId);
+        if(course.getClasses()!=null) {
+            //设置每一个分班的CourseId并将其插入数据库
+            course.getClasses().stream().peek(clazz -> clazz.setCourseId(courseId)).forEach(classMapper::addClass);
+
+        }
+        return new Result(ErrorCode.OK,courseId,"添加成功");
     }
 
     @Override

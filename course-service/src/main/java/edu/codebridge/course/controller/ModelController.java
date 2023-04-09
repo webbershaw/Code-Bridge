@@ -55,7 +55,9 @@ public class ModelController {
         }
 
     }
-    public Result queryModelsByUserId(Long userId,HttpServletRequest request){
+
+    @GetMapping
+    public Result queryModelsByUserId(HttpServletRequest request){
         try {
             return  modelService.queryModelByUserId(request);
         } catch (Exception e) {

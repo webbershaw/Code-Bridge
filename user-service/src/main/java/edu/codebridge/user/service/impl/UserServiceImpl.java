@@ -26,6 +26,21 @@ public class UserServiceImpl implements UserService {
     SenderUtil senderUtil;
 
     @Override
+    public Result getByTel(String tel) {
+        User user = userMapper.queryByTel(tel);
+        if(user==null){
+            return new Result(ErrorCode.ERR,null,"查无此教师,请检查电话号码");
+        }else if(!user.getIdentity().equals(IdentityCode.TEACHER)){
+            return new Result(ErrorCode.ERR,null,"该用户不是教师");
+        }
+        if(user.getSchoolId()!=null) {
+            user.setSchool(userMapper.querySchoolBySchoolId(user.getSchoolId()));
+        }
+        user = PrivateInfoRemoval.removePwd(user);
+        return new Result(ErrorCode.OK,user,"查询成功");
+    }
+
+    @Override
     public List<Integer> getUsersByUserIds(List<Integer> userIds) {
         return null;
     }
@@ -387,6 +402,11 @@ public class UserServiceImpl implements UserService {
             System.out.println(e);
             return new Result(ErrorCode.ERR,null,"发送失败，请联系管理员");
         }
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userMapper.updateByCondition(user);
     }
 
 

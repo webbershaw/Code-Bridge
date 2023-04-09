@@ -39,6 +39,8 @@ public interface UserMapper {
     @Select("select * from school where school_id != 0")
     public List<School> queryAllSchools();
 
+    @Select("select * from cb_user.school where school_id = #{schoolId}")
+    public School querySchoolBySchoolId(Integer schoolId);
 
 
 

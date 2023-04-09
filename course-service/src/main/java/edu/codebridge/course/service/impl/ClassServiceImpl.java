@@ -140,7 +140,7 @@ public class ClassServiceImpl implements ClassService {
             return Check.checkUser(request);
         }
         User user =(User)Check.checkUser(request).getData();
-        //把用户敏感信息去掉
+        //把用户敏感信息去掉0
         Class clazz = classMapper.getClassByIdAndNoDeleted(classId);
         User user2 = userClient.queryById(clazz.getUserId());
         user2.setPwd(null);

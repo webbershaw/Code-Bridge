@@ -4,6 +4,7 @@ import edu.codebridge.course.service.CourseService;
 import edu.codebridge.feign.code.ErrorCode;
 import edu.codebridge.feign.entity.Course;
 import edu.codebridge.feign.entity.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,10 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping("/courses/course")
 public class CourseController {
-    private CourseService courseService;
-    @PostMapping()
-    public Result save(Course course, HttpServletRequest request){
 
+    @Autowired
+    private CourseService courseService;
+    @PostMapping
+    public Result save(@RequestBody Course course, HttpServletRequest request){
         try {
             return courseService.addCourse(course, request);
         } catch (Exception e) {
@@ -29,7 +31,7 @@ public class CourseController {
              return courseService.updateCourse(course,request);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
+            return new Result(ErrorCode.ERR,null,"更新失败，请联系管理员");
         }
 
     }
@@ -41,7 +43,7 @@ public class CourseController {
             return courseService.getCourseById(courseId,request);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result(ErrorCode.ERR,null,"添加失败，请联系管理员");
+            return new Result(ErrorCode.ERR,null,"查询失败，请联系管理员");
         }
 
     }

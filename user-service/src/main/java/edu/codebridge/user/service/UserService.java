@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface UserService {
+    public Result getByTel(String tel);
 
     public List<Integer> getUsersByUserIds(List<Integer> userIds);
 
@@ -49,6 +50,8 @@ public interface UserService {
     public Result completeInfo(HttpServletRequest request,User user);
 
     public  Result sendEmailVerifyCode(HttpServletRequest request,String to);
+
+    public void updateUser(User user);
 
 
 

@@ -137,6 +137,18 @@ public class UserController {
         request.getSession().removeAttribute("user");
         return new Result(ErrorCode.OK,null);
     }
+    @GetMapping ("/tel/{tel}")
+    public  Result completeInfo(@PathVariable String tel){
+        try {
+            return  userService.getByTel(tel);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(ErrorCode.ERR,null,"电话号码为:"+tel+" 的用户不存在");
+        }
+
+    }
+
+
 
 
 
