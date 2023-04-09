@@ -17,7 +17,7 @@ public interface TaskMapper {
      * @param taskId
      * @return  List<Task>
      */
-    @Select("select * from cb_task.task where task_id = #{taskId}")
+
     public List<Task> queryTaskByTaskId(Integer taskId);
 
     /**
@@ -25,7 +25,7 @@ public interface TaskMapper {
      * @param CourseId
      * @return  List<Task>
      */
-    @Select("select * from cb_task.task where course_id = #{courseId}")
+//    @Select("select * from cb_task.task where course_id = #{courseId}")
     public List<Task> queryTaskByCourseId(Integer CourseId);
 
     /**

@@ -2,11 +2,13 @@ package edu.codebridge.course.service.impl;
 
 import edu.codebridge.course.common.Check;
 import edu.codebridge.course.mapper.CourseMapper;
+import edu.codebridge.course.service.ClassService;
 import edu.codebridge.course.service.CourseService;
 import edu.codebridge.feign.client.RelationshipClient;
 import edu.codebridge.feign.client.UserClient;
 import edu.codebridge.feign.code.ErrorCode;
 import edu.codebridge.feign.code.IdentityCode;
+import edu.codebridge.feign.entity.Class;
 import edu.codebridge.feign.entity.Course;
 import edu.codebridge.feign.entity.Result;
 import edu.codebridge.feign.entity.User;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +32,8 @@ public class CourseServiceImpl implements CourseService {
     private UserClient userClient;
     @Autowired
     private RelationshipClient relationshipClient;
+    @Autowired
+    private ClassService classService;
 
     /**通过课程id
      * 查询课程
@@ -47,7 +52,33 @@ public class CourseServiceImpl implements CourseService {
 
 
         //查询课程
+        //此操作把课程和分班的老师传入
         Course course = courseMapper.getCourseById(id);
+        //把课程老师传入
+        User user1 = userClient.queryById(course.getUserId());
+        course.setUser(user1);
+        List<Class> classes = course.getClasses();
+
+        List<Long> userIds = new ArrayList<>();
+        for (Class c : classes) {
+            userIds.add(c.getUserId());
+        }
+
+
+        List<User> users = userClient.queryUsersByIds(userIds);
+
+
+        for (Class c : classes) {
+
+            User classUser = users.stream()
+                    .filter(u -> u.getId().equals(c.getUserId()))
+                    .findFirst()
+                    .orElse(null);
+
+            // Assign the user to the class
+            c.setUser(classUser);
+        }
+        course.setClasses(classes);
 
         return  new Result(ErrorCode.OK,course,"查询成功！");
     }
@@ -186,12 +217,11 @@ public class CourseServiceImpl implements CourseService {
         }
         User user =(User)Check.checkUser(request).getData();
 
-        /**
-         * ?
-         */
-        //couser类中的userId与用户登录的id相等来查询课程
-        //教师发起的课程
-        List<Course> courses = courseMapper.queryCoursesByUserId(user.getId());
+
+        //得到班级的id
+        List<Integer> classIds = relationshipClient.queryClassIdByUserId(user.getId());
+        //关联课程
+        List<Course> courses = courseMapper.queryCourseByClassIds(classIds);
 
         return new Result(ErrorCode.OK,courses,"查询成功！");
     }

@@ -91,6 +91,18 @@
         select *
         from course left join class on course.course_id=class.course_id where course.course_id=#{courseId} and course.deleted=0;
     </select>
+    <select id="queryCourseByClassId" resultMap="courseMap">
+        select *
+        from course left join class on course.course_id=class.course_id where class.class_id in  <foreach collection="classIds" item="id" open="(" separator= "," close=")" >
+        #{id}
+    </foreach> and course.deleted=0;
+
+    </select>
+    <select id="queryCourseByClassIds" resultType="edu.codebridge.feign.entity.Course"></select>
+    <!--    <select id="queryCourseByClassId" resultType="edu.codebridge.feign.entity.Course">-->
+<!--    select * from course left join class on course.course_id=class.coruse_id where cou-->
+<!--    -->
+<!--    </select>-->
 
 
 </mapper>

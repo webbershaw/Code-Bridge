@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class Resource {
@@ -14,5 +15,9 @@ public class Resource {
     private String  resourceUrl;
     private Short   deleted;
     private Integer classificationId;
+    private List<Integer> taskIds;
+    private  String correctAnswer;
+    private String userAnswer;
+    private String isCorrect;
 
 }

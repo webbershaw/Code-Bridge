@@ -16,8 +16,8 @@ public interface ResourceMapper {
      * @param resourceId
      * @return List<Resource>
      */
-    @Select("select * from cb_task.resource where resource_id = #{resourceId}")
-    public List<Resource> queryResourceByResourceId(Integer resourceId);
+    @Select("select * from cb_task.resource where resource_id = #{resourceId} and deleted=0")
+    public Resource queryResourceByResourceId(Integer resourceId);
 
     /**
      * 根据条件查询Resource

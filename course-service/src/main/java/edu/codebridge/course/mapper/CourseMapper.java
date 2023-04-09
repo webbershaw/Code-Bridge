@@ -78,4 +78,8 @@ public interface CourseMapper {
      */
 
     List<Course> queryCoursesByUserIds(List<Integer> userIds);
+
+
+
+    List<Course> queryCourseByClassIds(List<Integer> classIds);
 }

@@ -3,6 +3,28 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.codebridge.task.mapper.TaskMapper">
+    <resultMap id="task" type="edu.codebridge.feign.entity.Task">
+        <id column="task_id" property="taskId"></id>
+        <result column="task_id" property="taskId"></result>
+        <result column="course_id" property="courseId"/>
+        <result column="task_name" property="taskName"/>
+        <result column="task_type" property="taskType"/>
+        <collection property="resources" resultMap="edu.codebridge.task.mapper.ResourceMapper.resource">
+<!--            <id property="resourceId" column="resource_id"/>-->
+<!--            <result property="resourceType" column="resource_type"/>-->
+<!--            <result property="title" column="title"/>-->
+<!--            <result property="content" column="content"/>-->
+<!--            <result column="resource_url" property="resourceUrl"/>-->
+<!--            <result property="classificationId" column="classification_id"/>-->
+        </collection>
+
+    </resultMap>
+<!--    <insert id="InsertTask">-->
+
+<!--    -->
+<!--    </insert>-->
+
+
     <update id="updateTask">
         update cb_task.task
         <set>
@@ -36,5 +58,21 @@
         <if test="taskType != null and taskType != '' ">
             and task_type = #{taskType}
         </if>
+    </select>
+<!--    t.task_name, t.task_type, r.resource_type, r.title, r.content, r.resource_url-->
+    <select id="queryTaskByTaskId" resultMap="task">
+        SELECT *
+        FROM task t
+                 JOIN `task-resource` tr ON t.task_id = tr.task_id
+                 JOIN resource r ON tr.resource_id = r.resource_id
+        WHERE t.task_id = #{taskId} and t.deleted=0;
+    </select>
+    <select id="queryTaskByCourseId" resultMap="task">
+        SELECT *
+        FROM task t
+                 JOIN `task-resource` tr ON t.task_id = tr.task_id
+                 JOIN resource r ON tr.resource_id = r.resource_id
+        WHERE t.course_id = #{courseId} and t.deleted=0;
+
     </select>
 </mapper>

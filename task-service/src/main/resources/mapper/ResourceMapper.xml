@@ -3,6 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.codebridge.task.mapper.ResourceMapper">
+    <resultMap id="resource" type="edu.codebridge.feign.entity.Resource">
+        <result property="resourceId" column="resource_id"/>
+        <result property="resourceUrl" column="resource_url"/>
+        <result property="content" column="content"/>
+        <result property="classificationId" column="classification_id"/>
+        <result property="resourceType" column="resource_type"/>
+        <result property="title" column="title"/>
+        <result property="userAnswer" column="user_answer"/>
+        <result property="correctAnswer" column="correct_answer"/>
+        <result property="isCorrect" column="is_correct"/>
+       <association property="taskIds"/>
+
+
+    </resultMap>
+
     <update id="updateResource">
         update cb_task.resource
         <set>
@@ -23,6 +38,15 @@
             </if>
             <if test="classificationId != null and classificationId != '' ">
                 classification_id = #{classificationId}
+            </if>
+            <if test="userAnswer != null and userAnswer != '' ">
+                user_answer = #{userAnswer}
+            </if>
+            <if test=" correctAnswer!= null and correctAnswer != '' ">
+                correct_answer = #{correctAnswer}
+            </if>
+            <if test=" isCorrect!= null and isCorrect != '' ">
+                is_correct = #{isCorrect}
             </if>
         </set>
     </update>

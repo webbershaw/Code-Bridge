@@ -111,7 +111,7 @@ public class MapperTest {
 //        System.out.println(classes);
 //        classes.stream().forEach(item->item.setUser(userClient.queryById(item.getUserId())));
 //        System.out.println(classes);
-
+            courseMapper.getCourseById(1);
     }
 
 }

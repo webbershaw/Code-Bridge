@@ -6,6 +6,7 @@ import edu.codebridge.task.mapper.TaskMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,17 +25,12 @@ public class TaskMapperTest {
         taskMapper.InsertTask(task);
     }
 
-
+@Transactional
     @Test
     public void queryTaskByConditionTest(){
-        Task task = new Task();
-        task.setTaskId(6);
-        task.setTaskName("高等数学");
-        task.setCourseId(2);
-        task.setTaskType((short) 3);
-        List<Task> tasks = taskMapper.queryTaskByCondition(task);
-        System.out.println(tasks);
-    }
+    List<Task> tasks = taskMapper.queryTaskByCourseId(2);
+    System.out.println(tasks);
+}
 
 
     @Test
