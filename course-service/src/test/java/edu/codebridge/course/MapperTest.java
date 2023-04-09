@@ -112,8 +112,6 @@ public class MapperTest {
 //        classes.stream().forEach(item->item.setUser(userClient.queryById(item.getUserId())));
 //        System.out.println(classes);
 
-
-        List<Course> courses = courseMapper.queryCoursesByUserId(1l);
     }
 
 }

@@ -204,7 +204,7 @@ public class ClassServiceImpl implements ClassService {
         //查询
         List<Integer> classIds= relationshipClient.queryClassIdByUserId(user.getId());
         if(classIds.isEmpty()){
-            return new Result(ErrorCode.OK,new ArrayList<>(),"您没有任何课程");
+            return new Result(ErrorCode.OK,new ArrayList<>(),"您没有任何班级");
         }
         List<Class> classes = classMapper.queryClassByClassIds(classIds);
         classes.stream()

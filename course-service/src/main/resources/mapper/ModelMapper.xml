@@ -20,7 +20,6 @@
                 #{isPublic},
                 #{userId},
                 #{classificationId}
-
             );
 
 
