@@ -36,8 +36,8 @@ public class CourseController {
 
     }
 
-    @GetMapping()
-    public Result queryCourseByCourseId(Integer courseId,HttpServletRequest request){
+    @GetMapping("/{courseId}")
+    public Result queryCourseByCourseId(@PathVariable Integer courseId,HttpServletRequest request){
 
         try {
             return courseService.getCourseById(courseId,request);
@@ -62,6 +62,7 @@ public class CourseController {
 
 
 
+    @GetMapping
     public Result  queryCoursesByUserId(HttpServletRequest request){
         try {
             return courseService.queryCoursesByUserId(request);

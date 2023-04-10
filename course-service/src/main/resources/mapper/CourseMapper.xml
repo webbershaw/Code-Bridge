@@ -12,6 +12,7 @@
         <result column="user_id" property="userId"/>
         <result column="model_id" property="modelId"/>
         <result column="deleted" property="deleted"/>
+        <result column="image_path" property="imagePath"/>
         <collection property="classes" resultMap="edu.codebridge.course.mapper.ClassMapper.classMap2"/>
 
     </resultMap>
@@ -25,7 +26,8 @@
     start_time,
     end_time,
     user_id,
-    model_id
+    model_id,
+    image_path
     )
     VALUES
     (
@@ -35,7 +37,8 @@
     #{startTime},
     #{endTime},
     #{userId},
-    #{modelId}
+    #{modelId},
+     #{imagePath}
     );
     </insert>
 

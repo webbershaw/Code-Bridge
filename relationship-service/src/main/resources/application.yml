@@ -53,6 +53,15 @@ mybatis:
 
 server:
   port: 8082
+  servlet:
+    session:
+      cookie:
+
+        # 设置 SameSite 属性为 None
+        secure: true
+        # 启用 Secure 属性
+        comment:
+        same-site: none
 
 
 

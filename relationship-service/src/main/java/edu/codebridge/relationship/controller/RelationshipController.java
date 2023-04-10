@@ -4,6 +4,7 @@ import edu.codebridge.feign.code.ErrorCode;
 import edu.codebridge.feign.entity.Result;
 import edu.codebridge.feign.entity.StudentClass;
 import edu.codebridge.feign.entity.StudentTaskResource;
+import edu.codebridge.feign.entity.User;
 import edu.codebridge.relationship.mapper.RelationshipMapper;
 import edu.codebridge.relationship.service.StudentTaskResourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,6 +107,25 @@ public class RelationshipController {
         } catch (Exception e) {
             return new Result(ErrorCode.ERR,null,"出错啦！服务异常");
         }
+    }
+
+    @GetMapping ("/StudentClass/{classId}")
+    public Result bindClass(@PathVariable Integer classId,HttpServletRequest request){
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
+        }
+        User user = (User) user1;
+        StudentClass studentClass = new StudentClass();
+        studentClass.setClassId(classId);
+        studentClass.setUserId(user.getId());
+        try {
+            relationshipMapper.insertStudentClass(studentClass);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(ErrorCode.ERR,null,"添加失败");
+        }
+        return new Result(ErrorCode.OK,null,"您已成功加入班级");
     }
 
 

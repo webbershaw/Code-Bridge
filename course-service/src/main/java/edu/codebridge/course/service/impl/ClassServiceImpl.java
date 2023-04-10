@@ -154,7 +154,7 @@ public class ClassServiceImpl implements ClassService {
         clazz.getCourse().setUser(user3);
 
         //这个课程的学生和这个分班老师和课程老师都可以看
-        if(user.getId()!= clazz.getUserId()&&user.getId()!=clazz.getCourse().getUserId()&&!relationshipClient.queryUserIdByClassId(clazz.getClassId()).contains(user.getId())){
+        if(!user.getId().equals(clazz.getUserId())&&!user.getId().equals( clazz.getCourse().getUserId())&&!relationshipClient.queryUserIdByClassId(clazz.getClassId()).contains(user.getId())){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的无权查看" );
         }
         return new Result(ErrorCode.OK,clazz,"查询成功！");

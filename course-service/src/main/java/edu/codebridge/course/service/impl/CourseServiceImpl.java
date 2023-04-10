@@ -80,6 +80,7 @@ public class CourseServiceImpl implements CourseService {
         }
         course.setClasses(classes);
 
+
         return  new Result(ErrorCode.OK,course,"查询成功！");
     }
 
@@ -194,7 +195,7 @@ public class CourseServiceImpl implements CourseService {
         }
         User user =(User)Check.checkUser(request).getData();
         //校验老师身份
-        if(user.getIdentity()!= IdentityCode.TEACHER){
+        if(!user.getIdentity().equals( IdentityCode.TEACHER)){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
         }
         //couser类中的userId与用户登录的id相等来查询课程
