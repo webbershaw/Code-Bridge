@@ -47,10 +47,11 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public Result addClass(Class clazz,HttpServletRequest request) {
         //校验登录
-        if (Check.checkUser(request).getData()==null){
-           return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
 
         //添加需要教师权限
         if(!user.getIdentity().equals(IdentityCode.TEACHER)){
@@ -70,10 +71,11 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public Result updateClassById(Class clazz, HttpServletRequest request) {
         //校验登录
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
         //修改需要教师权限
         if(!user.getIdentity().equals(IdentityCode.TEACHER)){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
@@ -99,10 +101,11 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public Result queryUserIdByClassId(Integer classId, HttpServletRequest request) {
         //校验登录
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
 
         //查询
         Long userId = classMapper.queryUserIdByClassId(classId);
@@ -118,10 +121,11 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public Result queryUserIdsByClassIds(List<Integer> classIds, HttpServletRequest request) {
         //登录校验
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
         //查询
         List<Long> userIds = classMapper.queryUerIdsByClassIds(classIds);
         return new Result(ErrorCode.OK,userIds,"查询成功！");
@@ -136,10 +140,11 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public Result queryClassByClassId(Integer classId, HttpServletRequest request) {
         //登录校验
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
         //把用户敏感信息去掉0
         Class clazz = classMapper.getClassByIdAndNoDeleted(classId);
         User user2 = userClient.queryById(clazz.getUserId());
@@ -169,10 +174,11 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public Result queryClassesByUserId(HttpServletRequest request) {
         //登录校验
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
 
         //此方法要对老师开放
         if(!user.getIdentity().equals(IdentityCode.TEACHER)){
@@ -196,10 +202,11 @@ public class ClassServiceImpl implements ClassService {
     @Override
     public Result queryClassesByStudentUserId(HttpServletRequest request) {
         //登录校验
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
 
         //查询
         List<Integer> classIds= relationshipClient.queryClassIdByUserId(user.getId());

@@ -3,6 +3,7 @@ package edu.codebridge.task.service.impl;
 import edu.codebridge.feign.client.RelationshipClient;
 import edu.codebridge.feign.code.ErrorCode;
 import edu.codebridge.feign.code.IdentityCode;
+import edu.codebridge.feign.entity.Resource;
 import edu.codebridge.feign.entity.Result;
 import edu.codebridge.feign.entity.Task;
 import edu.codebridge.feign.entity.User;
@@ -35,18 +36,22 @@ public class TaskServiceImpl implements edu.codebridge.task.service.TaskService 
         }
         User user =(User) user1;
         //查出该任务详细信息,任务的所有资源
-        List<Task> tasks = taskMapper.queryTaskByTaskId(taskId);
+        Task tasks = taskMapper.queryTaskByTaskId(taskId);
+        //如果是题目则给出不给出正确答案
+        List<Resource> resources = tasks.getResources();
+        resources.stream().filter(resource -> resource.getResourceType() == 1).
+                forEach(resource -> resource.setCorrectAnswer(""));
         return new Result(ErrorCode.OK,tasks,"查询成功！");
     }
 
     /**
      * 通过course_id查询
-     * @param courseId
+     * @param modelId
      * @param request
      * @return
      */
     @Override
-    public Result queryTaskCourseId(Integer courseId, HttpServletRequest request) {
+    public Result queryTaskModelId(Integer modelId, HttpServletRequest request) {
         //校验登录
         Object user1 = request.getSession().getAttribute("user");
         if(user1==null){
@@ -54,7 +59,11 @@ public class TaskServiceImpl implements edu.codebridge.task.service.TaskService 
         }
         User user =(User) user1;
         //查询
-        List<Task> tasks = taskMapper.queryTaskByCourseId(courseId);
+        Task tasks = taskMapper.queryTaskByModelId(modelId);
+        //题目不给出正确答案
+        List<Resource> resources = tasks.getResources();
+        resources.stream().filter(resource -> resource.getResourceType() == 1).
+                forEach(resource -> resource.setCorrectAnswer(""));
         return new Result(ErrorCode.OK,tasks,"查询成功！");
     }
 
@@ -109,7 +118,7 @@ public class TaskServiceImpl implements edu.codebridge.task.service.TaskService 
         if(!user.getIdentity().equals(IdentityCode.TEACHER)){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的无权查看" );
         }
-        taskMapper.InsertTask(task);
+        taskMapper.insertTask(task);
         return new Result(ErrorCode.OK,null,"添加成功！");
     }
 }

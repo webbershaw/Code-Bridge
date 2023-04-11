@@ -1,6 +1,7 @@
 package edu.codebridge.task;
 
 
+import edu.codebridge.feign.entity.Resource;
 import edu.codebridge.feign.entity.Task;
 import edu.codebridge.task.mapper.TaskMapper;
 import org.junit.jupiter.api.Test;
@@ -21,22 +22,28 @@ public class TaskMapperTest {
         task.setTaskId(1);
         task.setTaskName("高等数学");
         task.setTaskType((short) 3);
-        task.setCourseId(2);
-        taskMapper.InsertTask(task);
+        task.setModelId(0);
+        taskMapper.insertTask(task);
     }
 
-@Transactional
+
     @Test
     public void queryTaskByConditionTest(){
-    List<Task> tasks = taskMapper.queryTaskByCourseId(2);
-    System.out.println(tasks);
+    //查出该任务详细信息,任务的所有资源
+    Task task = new Task();
+    task.setTaskId(7);
+    task.setModelId(2);
+    task.setTaskName("高等小学");
+    task.setDeleted((short)0);
+    task.setTaskType((short)3);
+ taskMapper.insertTask(task);
 }
 
 
     @Test
     public void updateTaskTest(){
         Task task = new Task();
-        task.setCourseId(2);
+
         task.setTaskId(6);
         taskMapper.updateTask(task);
     }

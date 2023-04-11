@@ -32,10 +32,11 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public Result addModel(Model model, HttpServletRequest request) {
         //登录校验
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
 
         //必须老师才能有权限
         if(user.getIdentity()!= IdentityCode.TEACHER){
@@ -55,10 +56,11 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public Result copyModelByModelId(Integer modelId,HttpServletRequest request) {
         //登录校验
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
 
         //身份需要为老师
         if(user.getIdentity()!= IdentityCode.TEACHER){
@@ -82,10 +84,11 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public Result queryAllModel(HttpServletRequest request) {
         //登录校验
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
         //需要为老师
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
@@ -109,16 +112,17 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public Result queryModelByKeyWord(String name, HttpServletRequest request) {
         //登录
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
         //需要是老师
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
         }
         //通过关键词查询
-        List<Model> models = modelMapper.queryByKeyWord(name);
+        List<Model> models = modelMapper.queryByKeyWord("%"+name+"%");
         List<Long> userIds = new ArrayList<>();
         models.stream().forEach(item->{item.setUser(null);userIds.add(item.getUserId());});
         List<User> users = userClient.queryUsersByIds(userIds);
@@ -135,10 +139,11 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public Result queryModelByUserId(HttpServletRequest request) {
         //登录校验
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
 
         //需要是老师
         if(user.getIdentity()!= IdentityCode.TEACHER){

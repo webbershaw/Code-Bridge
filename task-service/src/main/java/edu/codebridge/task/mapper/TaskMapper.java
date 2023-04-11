@@ -18,15 +18,15 @@ public interface TaskMapper {
      * @return  List<Task>
      */
 
-    public List<Task> queryTaskByTaskId(Integer taskId);
+    public Task queryTaskByTaskId(Integer taskId);
 
     /**
-     * 根据courseid
-     * @param CourseId
+     * 根据modelid
+     * @param modelId
      * @return  List<Task>
      */
 //    @Select("select * from cb_task.task where course_id = #{courseId}")
-    public List<Task> queryTaskByCourseId(Integer CourseId);
+    public Task queryTaskByModelId(Integer modelId);
 
     /**
      * 根据条件查询
@@ -43,10 +43,10 @@ public interface TaskMapper {
     public Boolean updateTask(Task task);
 
     @Insert("insert into cb_task.task" +
-            "(task_id, course_id, task_name, task_type)" +
+            "(task_id, model_id, task_name, task_type)" +
             "value " +
-            "(#{taskId}, #{courseId}, #{taskName}, #{taskType}) ")
-    public Boolean InsertTask(Task task);
+            "(#{taskId}, #{modelId}, #{taskName}, #{taskType}) ")
+    public Boolean insertTask(Task task);
 
 
 

@@ -6,7 +6,7 @@
     <resultMap id="task" type="edu.codebridge.feign.entity.Task">
         <id column="task_id" property="taskId"></id>
         <result column="task_id" property="taskId"></result>
-        <result column="course_id" property="courseId"/>
+        <result column="model_id" property="modelId"/>
         <result column="task_name" property="taskName"/>
         <result column="task_type" property="taskType"/>
         <collection property="resources" resultMap="edu.codebridge.task.mapper.ResourceMapper.resource">
@@ -31,8 +31,8 @@
             <if test="taskId != null and taskId != ''  ">
                 task_id = #{taskId},
             </if>
-            <if test="courseId != null and courseId != '' ">
-                course_id = #{courseId},
+            <if test="modelId != null and modelId != '' ">
+                model_id = #{modelId},
             </if>
             <if test="taskName != null and taskName != '' ">
                 task_name = #{taskName},
@@ -41,6 +41,7 @@
                 task_type = #{taskType}
             </if>
         </set>
+            where task_id=#{taskId}
     </update>
 
     <select id="queryTaskByCondition" resultType="edu.codebridge.feign.entity.Task">
@@ -49,8 +50,8 @@
         <if test="taskId != null and taskId != ''  ">
             and task_id = #{taskId}
         </if>
-        <if test="courseId != null and courseId != '' ">
-            and course_id = #{courseId}
+        <if test="modelId != null and modelId != '' ">
+            and model_id = #{modelId}
         </if>
         <if test="taskName != null and taskName != '' ">
             and task_name = #{taskName}
@@ -67,12 +68,12 @@
                  JOIN resource r ON tr.resource_id = r.resource_id
         WHERE t.task_id = #{taskId} and t.deleted=0;
     </select>
-    <select id="queryTaskByCourseId" resultMap="task">
+    <select id="queryTaskByModelId" resultMap="task">
         SELECT *
         FROM task t
                  JOIN `task-resource` tr ON t.task_id = tr.task_id
                  JOIN resource r ON tr.resource_id = r.resource_id
-        WHERE t.course_id = #{courseId} and t.deleted=0;
+        WHERE t.model_id = #{modelId} and t.deleted=0;
 
     </select>
 </mapper>

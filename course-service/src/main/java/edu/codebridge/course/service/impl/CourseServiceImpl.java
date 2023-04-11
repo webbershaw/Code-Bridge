@@ -45,10 +45,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Result getCourseById(Integer id,HttpServletRequest request) {
         //登录校验
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user2 = request.getSession().getAttribute("user");
+        if(user2==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user2;
 
 
         //查询课程
@@ -93,10 +94,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Result addCourse(Course course, HttpServletRequest request) {
         //校验登录
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
         //校验教师身份
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
@@ -117,10 +119,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Result getAllCourse(HttpServletRequest request) {
         //校验登录
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
 
         /**
          * 优化？
@@ -141,10 +144,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Result updateCourse(Course course,HttpServletRequest request) {
         //校验登录
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
         //老师才能修改课程
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
@@ -169,10 +173,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Result deletedCourseById(Integer id,HttpServletRequest request) {
         //校验登录
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
         //必须为老师才能删除
         if(user.getIdentity()!= IdentityCode.TEACHER){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
@@ -190,10 +195,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Result queryCoursesByUserId(HttpServletRequest request) {
         //校验登录
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
         //校验老师身份
         if(!user.getIdentity().equals( IdentityCode.TEACHER)){
             return new Result(ErrorCode.PERMISSION_DENIED,null,"您的权限不足" );
@@ -213,10 +219,11 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public Result queryCoursesByStudentUserId(HttpServletRequest request) {
         //校验登录
-        if (Check.checkUser(request).getData()==null){
-            return Check.checkUser(request);
+        Object user1 = request.getSession().getAttribute("user");
+        if(user1==null){
+            return new Result(ErrorCode.NOT_LOGIN,null,"您的登录已过期");
         }
-        User user =(User)Check.checkUser(request).getData();
+        User user =(User) user1;
 
 
         //得到班级的id

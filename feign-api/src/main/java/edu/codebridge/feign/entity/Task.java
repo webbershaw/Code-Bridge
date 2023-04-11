@@ -7,7 +7,7 @@ import java.util.List;
 @Data
 public class Task {
     private Integer taskId;
-    private Integer courseId;
+    private Integer modelId;
     private Course  course;
     private String  taskName;
     private Short   taskType;

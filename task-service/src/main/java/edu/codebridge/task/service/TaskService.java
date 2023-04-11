@@ -15,12 +15,12 @@ public interface TaskService {
   Result queryTaskByTaskId(HttpServletRequest request,Integer taskId);
 
     /**
-     * 根据courseId
-     * @param courseId
+     * 根据modelId
+     * @param modelId
      * @param request
      * @return
      */
-  Result queryTaskCourseId(Integer courseId,HttpServletRequest request);
+  Result queryTaskModelId(Integer modelId,HttpServletRequest request);
 
     /**
      * 根据条件查询
