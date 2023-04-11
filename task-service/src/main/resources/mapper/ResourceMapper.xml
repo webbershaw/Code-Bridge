@@ -10,7 +10,6 @@
         <result property="classificationId" column="classification_id"/>
         <result property="resourceType" column="resource_type"/>
         <result property="title" column="title"/>
-        <result property="userAnswer" column="user_answer"/>
         <result property="correctAnswer" column="correct_answer"/>
         <result property="isCorrect" column="is_correct"/>
        <association property="taskIds"/>
@@ -38,9 +37,6 @@
             </if>
             <if test="classificationId != null and classificationId != '' ">
                 classification_id = #{classificationId}
-            </if>
-            <if test="userAnswer != null and userAnswer != '' ">
-                user_answer = #{userAnswer}
             </if>
             <if test=" correctAnswer!= null and correctAnswer != '' ">
                 correct_answer = #{correctAnswer}
@@ -72,5 +68,12 @@
         <if test="classificationId != null and classificationId != '' ">
             and classification_id = #{classificationId}
         </if>
+    </select>
+    <select id="queryByResourceIds" resultType="edu.codebridge.feign.entity.Resource">
+        select * from cb_task.resource
+        where resource_id in
+        <foreach collection="list" item="resourceId" open="(" separator="," close= ")">
+            #{resourceId}
+        </foreach>
     </select>
 </mapper>

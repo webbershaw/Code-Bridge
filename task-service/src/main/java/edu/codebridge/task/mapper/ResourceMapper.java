@@ -27,9 +27,9 @@ public interface ResourceMapper {
     public List<Resource> queryResourceByCondition(Resource resource);
 
     @Insert("insert into cb_task.resource " +
-            "(resource_id, resource_type, title, content, resource_url, classification_id)" +
+            "(resource_id, resource_type, title, content, resource_url, classification_id,correct_answer)" +
             "value " +
-            "(#{resourceId}, #{resourceType}, #{title}, #{content}, #{resourceUrl}, #{classificationId})")
+            "(#{resourceId}, #{resourceType}, #{title}, #{content}, #{resourceUrl}, #{classificationId},#{correctAnswer})")
     public Boolean insertResource(Resource resource);
 
     /**
@@ -46,6 +46,10 @@ public interface ResourceMapper {
      * @return Boolean
      */
     public Boolean updateResource(Resource resource);
+
+
+    public  List<Resource> queryByResourceIds(List<Integer> resourceIds);
+
 
 }
 

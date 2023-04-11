@@ -17,7 +17,6 @@ public class Resource {
     private Integer classificationId;
     private List<Integer> taskIds;
     private  String correctAnswer;
-    private String userAnswer;
     private String isCorrect;
 
 }

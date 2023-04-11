@@ -174,15 +174,6 @@
     <update id="updateStudentTaskResource">
         update cb_relationship.`student-task-resource`
         <set>
-            <if test="userId != null and userId !=''  ">
-                user_id = #{userId},
-            </if>
-            <if test="taskId != null and taskId != ''  ">
-                task_id = #{taskId},
-            </if>
-            <if test="resourceId != null and resourceId != ''  ">
-                resource_id = #{resourceId},
-            </if>
             <if test="status != null and status != '' ">
                 `status` = #{status},
             </if>
@@ -193,6 +184,7 @@
                 answer = #{answer}
             </if>
         </set>
+        where user_id = #{userId} and task_id=#{task_id} and resource_id=#{resource_id}
     </update>
 
     <select id="queryStudentTasksResourceByCondition" resultType="edu.codebridge.feign.entity.StudentTaskResource">

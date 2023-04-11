@@ -70,6 +70,10 @@ public class RelationshipController {
 
 
 
+
+
+
+
     /*--------------------------------------------*/
     @GetMapping("/pr/queryUserIdByTaskId/{taskId}")
     public List<Long> queryUserIdByTaskId(@PathVariable Integer taskId){
@@ -95,6 +99,20 @@ public class RelationshipController {
 
 
     /*-----------------------------------------*/
+    @PostMapping("/pr/insertStudetTaskResource")
+    public Boolean insertStudentTaskResource(@RequestBody StudentTaskResource studentTaskResource){
+        return relationshipMapper.insertStudentTaskResource(studentTaskResource);
+    }
+
+    @PostMapping("pr/queryStudentTaskResourceByCondition")
+    public List<StudentTaskResource> queryStudentTaskResourceByCondition(@RequestBody StudentTaskResource studentTaskResource){
+        return relationshipMapper.queryStudentTasksResourceByCondition(studentTaskResource);
+    }
+
+    @PostMapping("pr/updateStudentTaskResourceByCondition")
+    public Boolean updateStudentTaskResourceByCondition(@RequestBody StudentTaskResource studentTaskResource){
+        return relationshipMapper.updateStudentTaskResource(studentTaskResource);
+    }
 
 
 
@@ -127,6 +145,7 @@ public class RelationshipController {
         }
         return new Result(ErrorCode.OK,null,"您已成功加入班级");
     }
+
 
 
 
