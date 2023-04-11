@@ -83,10 +83,10 @@ public interface RelationshipMapper {
 
     /**
      * 更新StudentTaskResource数据表
-     * @param studentClass
+     * @param studentTaskResource
      * @return Boolean
      */
-    public Boolean updateStudentTaskResource(StudentClass studentClass);
+    public Boolean updateStudentTaskResource(StudentTaskResource studentTaskResource);
 
     /**
      * 根据条件查询StudentTasksResource数据表

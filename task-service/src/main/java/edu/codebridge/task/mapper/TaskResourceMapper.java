@@ -52,4 +52,7 @@ public interface TaskResourceMapper {
      */
     public Boolean updateTaskResource(TaskResource taskResource);
 
+    @Select("select resource_id from cb_task.`task-resource` where task_id=#{taskId}")
+    public List<Integer> queryResourceIdsByTaskId(Integer taskId);
+
 }

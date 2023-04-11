@@ -1,5 +1,6 @@
 package edu.codebridge.feign.client;
 
+import edu.codebridge.feign.entity.StudentTaskResource;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,4 +53,16 @@ public interface RelationshipClient {
 
     @PostMapping("/relationships/pr/queryTaskIdByUserIds")
     public List<Integer> queryTaskIdByUserIds(@RequestBody List<Long> userIds);
+
+
+    @PostMapping("/relationships/pr/insertStudetTaskResource")
+    public Boolean insertStudentTaskResource(@RequestBody StudentTaskResource studentTaskResource);
+
+    @PostMapping("/relationships/pr/queryStudentTaskResourceByCondition")
+    public List<StudentTaskResource> queryStudentTaskResourceByCondition(@RequestBody StudentTaskResource studentTaskResource);
+
+    @PostMapping("/relationships/pr/updateStudentTaskResourceByCondition")
+    public Boolean updateStudentTaskResourceByCondition(@RequestBody StudentTaskResource studentTaskResource);
 }
+
+
