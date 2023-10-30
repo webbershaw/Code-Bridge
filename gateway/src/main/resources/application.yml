@@ -1,6 +1,4 @@
-
 server:
-
   port: 8080
 spring:
   application:
@@ -51,13 +49,13 @@ spring:
               - "http://127.0.0.1:80"
               - "http://128.0.0.1:8088"
               - "http://127.0.0.1:63343"
-              - "http://127.0.0.1:8899"
+              - "http://127.0.0.1:63342"
               - "http://codebridge.cn"
               - "http://www.codebridge.cn"
               - "https://codebridge.cn"
               - "https://www.codebridge.cn"
               - "http://localhost:63343"
-              - "http://localhost:8899"
+              - "http://localhost:63342"
             allowed-methods:
               - "GET"
               - "POST"
@@ -65,9 +63,6 @@ spring:
               - "PUT"
               - "OPTIONS"
             allowed-headers: "*"
-  jackson:
-    date-format: yyyy-MM-dd HH:mm
-
 
 
 

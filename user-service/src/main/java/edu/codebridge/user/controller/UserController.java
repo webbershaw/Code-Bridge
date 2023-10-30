@@ -50,7 +50,7 @@ public class UserController {
     @PostMapping("/loginByPwd")
     public Result loginByPwd(HttpServletRequest httpServletRequest,@RequestBody User user){
         HttpSession session = httpServletRequest.getSession();
-        if (user.getTel() == null) {
+                if (user.getTel() == null) {
             return new Result(ErrorCode.ERR,null,"账号不能为空");
         }
         if (user.getPwd() == null) {
