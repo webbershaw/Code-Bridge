@@ -8,6 +8,7 @@ Detailed information about this project was listed on the the website below.
 
 #### Prize
 The First Prize in the Central South China Competition of the China University Students Computer Design Contest
+
 The Third Prize in the National Competition of the China University Students Computer Design Contest
 
 #### Frameworks
