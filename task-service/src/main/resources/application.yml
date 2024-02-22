@@ -14,7 +14,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://home.codebridge.cn:3306/cb_task
     username: root
-    password: Yy336699
+    password: 
     type: com.alibaba.druid.pool.DruidDataSource
     dbcp2:
       pool-prepared-statements: true
