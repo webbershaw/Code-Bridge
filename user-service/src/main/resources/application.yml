@@ -20,7 +20,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://home.codebridge.cn:3306/cb_user
     username: root
-    password: Yy336699
+    password: 
     type: com.alibaba.druid.pool.DruidDataSource
     dbcp2:
       pool-prepared-statements: true
@@ -38,8 +38,8 @@ spring:
 
   mail:
     host: smtp.exmail.qq.com
-    username: wenboxiao@stu.hunau.edu.cn
-    password: Xiaoge0225
+    username: 
+    password: 
     default-encoding: utf-8
   jackson:
     default-property-inclusion: non_null
@@ -83,8 +83,8 @@ azureblob:
   blobEndpoint: https://emue7eheidyf4vpnsa.blob.core.windows.net
   queueEndpoint: https://emue7eheidyf4vpnsa.square.core.windows.net
   tableEndpoint: https://emue7eheidyf4vpnsa.table.core.windows.net
-  accountName: emue7eheidyf4vpnsa
-  accountKey: ei06tW+9/NrXjGa38hXbIj7LbwnlfArksMfwtejW/MYtSqAWXyh0garzwtzMKAoYvoqIBV4K4TXk+AStYCGl1Q==
+  accountName: 
+  accountKey: 
 #
 
 
